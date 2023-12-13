@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Pressable, StyleSheet, TextInput } from 'react-native'
+import { Alert, Pressable, StyleSheet, TextInput } from 'react-native'
 import { Text } from 'react-native'
 import { View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
@@ -46,6 +46,7 @@ function ViewProduct({ route, navigation }) {
                 color,
                 size
             )
+            Alert.alert('Added to Cart')
             cart(cartProduct)
         }
 
