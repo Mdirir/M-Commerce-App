@@ -1,9 +1,11 @@
 import Shadow from '../components/ui/Shadow'
-import { StyleSheet, Text, View } from 'react-native'
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
 import { useLayoutEffect, useState } from 'react';
 import axios from "axios"
 import FeaturedProduct from '../components/products/FeaturedProduct';
 import Products from '../components/products/Products';
+import { ScrollView } from 'react-native';
+import InsetShadow from 'react-native-inset-shadow';
 
 function Home({ navigation }) {
     const [products, setProducts] = useState()
@@ -28,35 +30,39 @@ function Home({ navigation }) {
         }
     }, [])
     return (//Scrollview
-        <View className='flex-1'>
-
-            <Shadow shadowColor={[styles.card, styles.shadowProp]}>
+        <ScrollView className='flex-1'>
+            <View className='mx-2'>
+            <InsetShadow containerStyle={{ marginVertical:12,borderRadius: 8 , height:50}}>
                 <Text style={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 10,
+                    paddingVertical: 14,
+                    paddingHorizontal: 14,
                     fontWeight: 'bold',
+                    borderRadius:12
                 }}>
                     Featured Products
                 </Text>
-            </Shadow>
+            </InsetShadow></View>
             <View className='mx-1'>
-                {products ? <FeaturedProduct products={products.featuredProducts} /> : ""}
+                {products ? <FeaturedProduct products={products.featuredProducts} /> :  <ActivityIndicator size="small" color="green" />}
             </View>
-            <Shadow shadowColor={[styles.card, styles.shadowProp]}>
+            <View className='mx-2'>
+            <InsetShadow containerStyle={{ marginVertical:12,borderRadius: 8 , height:50}}>
                 <Text style={{
-                    paddingVertical: 10,
-                    paddingHorizontal: 10,
+                    paddingVertical: 14,
+                    paddingHorizontal: 14,
                     fontWeight: 'bold',
+                    width:'100%',
+                    borderRadius:12
                 }}>
                     Latest Products
                 </Text>
-            </Shadow>
+            </InsetShadow></View>
             {products ? (
                 <Products products={products.latestProducts.slice(0, 12)} />
             ) : (
-                ""
+                <ActivityIndicator size="small" color="green" />
             )}
-        </View>
+        </ScrollView>
     )
 }
 
@@ -69,13 +75,14 @@ const styles = StyleSheet.create({
     },
     //shadow
     card: {
-        marginRight: 100,
+        //marginRight: 100,
         backgroundColor: '#E7EBF0',//else
-        borderRadius: 8,
+        borderRadius: 12,
         width: '100%',
         marginVertical: 20,
-        marginHorizontal: 20,
+        //marginHorizontal: 20,
         elevation: 20,
+        position: 'relative'
     },
     shadowProp: {//iphone
         shadowOffset: { width: 4, height: -2 },

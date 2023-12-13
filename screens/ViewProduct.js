@@ -30,11 +30,10 @@ function ViewProduct({ route, navigation }) {
         console.log("will be activated soon");
         if (
             tempColor !== undefined &&
-            tempSize !== undefined &&
-            quantity !== undefined
+            tempSize !== undefined
         ) {
 
-            const quantityy = { quantity: quantity }
+            const quantityy = { quantity: quantity!== undefined?1:quantity }
             const color = { color: tempColor }
             const size = { size: tempSize }
             let cartProduct = Object.assign(
