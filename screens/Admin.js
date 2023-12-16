@@ -17,13 +17,45 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AddProduct from '../components/Admin/AddProduct';
+import AdminProducts from '../components/Admin/AdminProducts';
 
 function Admin() {
+    const [toggleProductView, setTogleProductView] = useState(false)
+    const [toggleProductAdd, setTogleProductAdd] = useState(false)
     return (
         <SafeAreaView>
-            <View>
-                <AddProduct></AddProduct>
-            </View>
+            <ScrollView>
+                <View className='flex flex-col gap-y-3 mb-6'>
+                    <View>
+                        <View className='h-14 mx-4'>
+                            <InsetShadow containerStyle={{ borderRadius: 8 }}>
+                                <Pressable onPress={() => { setTogleProductAdd(false), setTogleProductView(true) }}
+                                    className=" bg-opacity-0 flex flex-row py-2 px-3 rounded-lg" android_ripple={{ color: '#ccc' }}
+                                >
+                                    <Text className='p-2 text-lg'> View Productsss</Text>
+                                </Pressable>
+                            </InsetShadow>
+                        </View>
+                        {toggleProductView ? <View>
+                            <AdminProducts />
+                        </View> : ""}
+                    </View>
+                    <View>
+                        <View className='h-14 mx-4'>
+                            <InsetShadow containerStyle={{ borderRadius: 8 }}>
+                                <Pressable onPress={() => { setTogleProductAdd(true), setTogleProductView(false) }}
+                                    className=" bg-opacity-0 flex flex-row py-2 px-3 rounded-lg" android_ripple={{ color: '#ccc' }}
+                                >
+                                    <Text className='p-2 text-lg'> View Add Products</Text>
+                                </Pressable>
+                            </InsetShadow>
+                        </View>
+                        {toggleProductAdd ? <View>
+                            <AddProduct />
+                        </View> : ""}
+                    </View>
+                </View>
+            </ScrollView>
         </SafeAreaView>
     )
 }

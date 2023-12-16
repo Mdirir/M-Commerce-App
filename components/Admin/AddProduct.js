@@ -1,5 +1,5 @@
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState, useRef } from 'react';
 import axios from "axios"
 import FeaturedProduct from '../products/FeaturedProduct';
 import Products from '../products/Products';
@@ -16,6 +16,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 
 function AddProduct() {
+    const secondTextInput = useRef(null); //to auto swap the to next row after completion
     const [formData, setFormData] = useState()
     const [productName, setProductName] = useState()
     const [productDesc, setProductDesc] = useState()
@@ -164,10 +165,14 @@ function AddProduct() {
                             className='p-3 w-64 dark:placeholder-white dark:text-black'
                             placeholder='Product Name'
                             onChangeText={(e) => setProductName(e)}
+                            returnKeyType="next"
+                            onSubmitEditing={() => { secondTextInput.current.focus(); }}
+                            blurOnSubmit={false}
                         />
                     </InsetShadow></View>
                 <View><InsetShadow containerStyle={{ borderRadius: 8, height: 'auto' }} >
                     <TextInput
+                        ref={secondTextInput}
                         type='text'
                         className='p-3 w-64 dark:placeholder-white dark:text-black'
                         placeholder='Product Keyword'

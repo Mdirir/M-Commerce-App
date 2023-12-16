@@ -78,4 +78,5 @@ export const images = {
     82: { 1: require('./images/ksht12.webp'), 2: require('./images/ksht13.jpg'), 3: require('./images/ksht12.webp') },
     89: { 1: require('./images/PANTS AIRSOFT 0000000.png'), 2: require('./images/PANTS AIRSOFT 000000.png'), 3: require('./images/PANTS AIRSOFT 0000000.png') },
     13: { 1: require('./images/sh3.jpg'), 2: require('./images/sh2.jpg'), 3: require('./images/sh3.jpg') },
+    255: { 1: require('./images/5265060765530143379_2048.jpg'), 2: require('./images/17192130095305642251_2048.jpg'), 3: require('./images/10100521308508491030_2048.jpg') },//for tesing images from cdn so they don't have to crash the app if thy're missing
 }
