@@ -29,7 +29,12 @@ function Auth({ navigation }) {
     const { state, createSession } = context
     useLayoutEffect(() => {
         if (state.session.token && state.session.token.length > 70) {
-            //navigation.navigate('Home') //Fix this //and redirect admin instead of home
+            if (state.session.user.name === 'admin' || state.session.user.name === 'Admin') {
+                navigation.navigate('Admin')
+            }
+            else {
+                navigation.navigate('Home')
+            }
             // navigation.setOptions = {
             //     title: 'HomePAGE',
             // }
@@ -51,8 +56,12 @@ function Auth({ navigation }) {
             if (response.data.success) {
                 await AsyncStorage.setItem("Session", JSON.stringify(response.data))
                 createSession()
-                navigation.navigate('Home')
                 setIsLoadingLogin(false)
+                if (response.data.user.name === 'admin' || response.data.user.name === 'Admin') {
+                    navigation.navigate('Admin')
+                } else {
+                    navigation.navigate('Home')
+                }
                 //goto MAin page
                 //CHECKA DMIN TYPE AND ACCESS ADMIN DASHBOARD HERE
             } else {

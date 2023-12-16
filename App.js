@@ -13,6 +13,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Cart from './screens/Cart';
 import { ContextAPI } from './store/context';
 import Auth from './screens/Auth';
+import Admin from './screens/Admin';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator()
@@ -31,6 +32,8 @@ export default function App() {
         />
         <Drawer.Screen name="Auth" component={Auth}
           options={{ headerShown: false, headerBackVisible: false, title: "Authentication", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
+        <Drawer.Screen name="Admin" component={Admin}
+          options={{ headerShown: false, headerBackVisible: false, title: "Admin Dashboard", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
       </Drawer.Navigator>
     );
   }
