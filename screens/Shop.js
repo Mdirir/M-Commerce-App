@@ -163,7 +163,7 @@ function Shop({ navigation }) {
             </View>
             <View className="mb-5">
                 {products ? (
-                    <Products products={products} className="" />
+                    <Products products={products} />
                 ) : (
                     ""
                 )}

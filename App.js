@@ -14,6 +14,7 @@ import Cart from './screens/Cart';
 import { ContextAPI } from './store/context';
 import Auth from './screens/Auth';
 import Admin from './screens/Admin';
+import Search from './screens/Search';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator()
@@ -59,8 +60,8 @@ export default function App() {
                 title: title
               }
             }} />
-          <Stack.Screen name="Cart" component={Cart}
-          />
+          <Stack.Screen name="Cart" component={Cart} />
+          <Stack.Screen name="Search" component={Search} />
           <Stack.Screen name="Auth" component={Auth}
             options={{ headerBackVisible: false, title: "Authentication", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
         </Stack.Navigator>
@@ -73,3 +74,33 @@ export default function App() {
 
 
 
+/*
+<ContextAPI>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+
+          }}
+        >
+          <Stack.Screen
+            name="Homepage" component={Homee}//nody goes to this screen, justplace honlder for now
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="Shop" component={Shop}
+            options={{ sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
+          <Stack.Screen name="View" component={ViewProduct}
+            options={({ route }) => {
+              const title = route.params.title
+              return {
+                title: title
+              }
+            }} />
+          <Stack.Screen name="Cart" component={Cart} />
+          <Stack.Screen name="Search" component={Search} />
+          <Stack.Screen name="Auth" component={Auth}
+            options={{ headerBackVisible: false, title: "Authentication", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
+        </Stack.Navigator>
+      </NavigationContainer >
+    </ContextAPI>
+*/

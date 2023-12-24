@@ -77,6 +77,17 @@ export default function CustomDrawer(props) {
                         />
                         <DrawerItem
                             icon={({ color, size }) => (
+                                <SimpleLineIcons
+                                    name="magnifier"
+                                    color={color}
+                                    size={size}
+                                />
+                            )}
+                            label="Search"
+                            onPress={() => { props.navigation.navigate('Search') }}
+                        />
+                        <DrawerItem
+                            icon={({ color, size }) => (
                                 <Icon
                                     name="cart"
                                     color={color}

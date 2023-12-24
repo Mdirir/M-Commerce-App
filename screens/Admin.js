@@ -18,10 +18,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AddProduct from '../components/Admin/AddProduct';
 import AdminProducts from '../components/Admin/AdminProducts';
+import { ShopConsumer } from '../store/context';
 
-function Admin() {
+function Admin(props) {
     const [toggleProductView, setTogleProductView] = useState(false)
     const [toggleProductAdd, setTogleProductAdd] = useState(false)
+    const context = ShopConsumer()
+    const { destroySession } = context
+
+    function signOut() {
+        destroySession()
+        props.navigation.push('Auth')
+    }
     return (
         <SafeAreaView>
             <ScrollView>
@@ -32,7 +40,7 @@ function Admin() {
                                 <Pressable onPress={() => { setTogleProductAdd(false), setTogleProductView(true) }}
                                     className=" bg-opacity-0 flex flex-row py-2 px-3 rounded-lg" android_ripple={{ color: '#ccc' }}
                                 >
-                                    <Text className='p-2 text-lg'> View Productsss</Text>
+                                    <Text className='p-2 text-lg'> Products Dashboard</Text>
                                 </Pressable>
                             </InsetShadow>
                         </View>
@@ -53,6 +61,17 @@ function Admin() {
                         {toggleProductAdd ? <View>
                             <AddProduct />
                         </View> : ""}
+                    </View>
+                    <View>
+                        <View className='h-14 mx-4'>
+                            <InsetShadow containerStyle={{ borderRadius: 8 }}>
+                                <Pressable onPress={() => signOut()}
+                                    className=" bg-opacity-0 flex flex-row py-2 px-3 rounded-lg" android_ripple={{ color: '#ccc' }}
+                                >
+                                    <Text className='p-2 text-lg'> Log Out</Text>
+                                </Pressable>
+                            </InsetShadow>
+                        </View>
                     </View>
                 </View>
             </ScrollView>
