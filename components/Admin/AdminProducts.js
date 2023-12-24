@@ -245,7 +245,21 @@ function Products(props) {
     }
     return (
         //<FlatList data={products} keyExtractor={(key) => key.product_id.toString()} renderItem={itemRenderer} numColumns={2} nestedScrollEnabled/>
-        !loading ? products.map((e) => itemRenderer(e)) :
+        !loading ? <View>
+            <View className='px-4 h-32 my-2'>
+                <InsetShadow containerStyle={{ borderRadius: 8 }} >
+                    <Text className='p-4 text-lg'>
+                        Total Products in Store: {products.length}
+                    </Text>
+                    <Text className='p-4 text-lg'>
+                        Total Products in Stock: {products.map(product => parseInt(product.stock)).reduce((acc, quantity) => acc + quantity, 0)}
+                    </Text>
+                </InsetShadow>
+            </View>
+            <View>
+                {products.map((e) => itemRenderer(e))}
+            </View>
+        </View> :
             (<View><ActivityIndicator size="small" color="green" /></View>)
         //FlatList was clashing with scrollview needed to be horizotal={true} // but we don't need horizontal 
     )
@@ -275,3 +289,18 @@ const styles = StyleSheet.create({
 })
 
 export default Products
+
+
+/*
+
+<View className='px-2'>
+<InsetShadow containerStyle={{ borderRadius: 8 }} >
+    <Text className='p-4 text-lg'>
+        Total Products in Store:
+    </Text>
+    <Text className='p-4 text-lg'>
+        Total Products in Stock:
+    </Text>
+</InsetShadow>
+</View>
+*/
