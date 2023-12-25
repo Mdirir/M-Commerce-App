@@ -33,7 +33,7 @@ function ViewProduct({ route, navigation }) {
             tempSize !== undefined
         ) {
 
-            const quantityy = { quantity: quantity=== undefined?1:quantity }
+            const quantityy = { quantity: quantity === undefined ? 1 : quantity }
             const color = { color: tempColor }
             const size = { size: tempSize }
             let cartProduct = Object.assign(

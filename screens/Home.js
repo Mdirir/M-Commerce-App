@@ -1,11 +1,12 @@
 import Shadow from '../components/ui/Shadow'
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native'
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react'
 import axios from "axios"
-import FeaturedProduct from '../components/products/FeaturedProduct';
-import Products from '../components/products/Products';
-import { ScrollView } from 'react-native';
-import InsetShadow from 'react-native-inset-shadow';
+import FeaturedProduct from '../components/products/FeaturedProduct'
+import Products from '../components/products/Products'
+import { ScrollView } from 'react-native'
+import InsetShadow from 'react-native-inset-shadow'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 function Home({ navigation }) {
     const [products, setProducts] = useState()
@@ -20,6 +21,10 @@ function Home({ navigation }) {
                     }
                 )
                 setProducts(response.data.showcaseProduct)
+                //check if there was user puchaseHistory
+                const purchase = await AsyncStorage.getItem("UserPurchaseHisory")
+                const UserPurchaseHisory = JSON.parse(purchase)
+                console.log(UserPurchaseHisory[0]['simp'].map((i, index) => console.log(i)), 'jj')
             } catch (error) {
                 console.log(error, "OH NO or Axios 404")
             }
@@ -32,31 +37,31 @@ function Home({ navigation }) {
     return (//Scrollview
         <ScrollView className='flex-1'>
             <View className='mx-2'>
-            <InsetShadow containerStyle={{ marginVertical:12,borderRadius: 8 , height:50}}>
-                <Text style={{
-                    paddingVertical: 14,
-                    paddingHorizontal: 14,
-                    fontWeight: 'bold',
-                    borderRadius:12
-                }}>
-                    Featured Products
-                </Text>
-            </InsetShadow></View>
+                <InsetShadow containerStyle={{ marginVertical: 12, borderRadius: 8, height: 50 }}>
+                    <Text style={{
+                        paddingVertical: 14,
+                        paddingHorizontal: 14,
+                        fontWeight: 'bold',
+                        borderRadius: 12
+                    }}>
+                        Featured Products
+                    </Text>
+                </InsetShadow></View>
             <View className='mx-1'>
-                {products ? <FeaturedProduct products={products.featuredProducts} /> :  <ActivityIndicator size="small" color="green" />}
+                {products ? <FeaturedProduct products={products.featuredProducts} /> : <ActivityIndicator size="small" color="green" />}
             </View>
             <View className='mx-2'>
-            <InsetShadow containerStyle={{ marginVertical:12,borderRadius: 8 , height:50}}>
-                <Text style={{
-                    paddingVertical: 14,
-                    paddingHorizontal: 14,
-                    fontWeight: 'bold',
-                    width:'100%',
-                    borderRadius:12
-                }}>
-                    Latest Products
-                </Text>
-            </InsetShadow></View>
+                <InsetShadow containerStyle={{ marginVertical: 12, borderRadius: 8, height: 50 }}>
+                    <Text style={{
+                        paddingVertical: 14,
+                        paddingHorizontal: 14,
+                        fontWeight: 'bold',
+                        width: '100%',
+                        borderRadius: 12
+                    }}>
+                        Latest Products
+                    </Text>
+                </InsetShadow></View>
             {products ? (
                 <Products products={products.latestProducts.slice(0, 12)} />
             ) : (

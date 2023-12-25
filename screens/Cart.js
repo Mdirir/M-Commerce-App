@@ -1,17 +1,19 @@
 import React from 'react'
 import { Alert, FlatList, ImageBackground, Pressable, Text, View } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ShopConsumer } from '../store/context';
-import InsetShadow from 'react-native-inset-shadow';
-import { images } from '../assets/Images';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { inherit } from 'tailwindcss/colors';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ShopConsumer } from '../store/context'
+import InsetShadow from 'react-native-inset-shadow'
+import { images } from '../assets/Images'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { inherit } from 'tailwindcss/colors'
 import { GlobalStyles } from '../components/theme/Colors'
+import Payment from '../components/Payment/Payment'
 
 let selectedProduct
 function Cart() {
     const context = ShopConsumer()
     const { state, setSearchTerm, cartRemoval } = context
+
     function removefromCart(selectedProduct, selectedProductPrice, selectedProductSize, selectedProductColor) {
         cartRemoval(
             selectedProduct,
@@ -19,7 +21,7 @@ function Cart() {
             selectedProductSize,
             selectedProductColor
         )
-        console.log(selectedProduct);
+        console.log(selectedProduct)
     }
     function itemRenderer(e) {
         return (
@@ -56,9 +58,14 @@ function Cart() {
         )
     }
     return (
-        <View className='rounded-lg p-2'>
-            < Text className='font-extrabold py-3 dark:text-white' > Total Items In Cart: {state.inCart}</ Text>
-            <FlatList data={state.product} key={(key) => key.product_id} renderItem={itemRenderer} className='ml-2 rounded-lg' />
+        <View className='rounded-lg p-2 flex flex-col justify-between flex-1 '>
+            <View>
+                < Text className='font-extrabold py-3 dark:text-white' > Total Items In Cart: {state.inCart}</ Text>
+                <FlatList data={state.product} key={(key) => key.product_id} renderItem={itemRenderer} className='ml-2 rounded-lg' />
+            </View>
+            <View className='h-16'>
+                <Payment userName={state.session.user.name} product_title={state.product[0] ? state.product[0].product_title : 0} totalPrice={state.totalPrice} allProducts={state.product} />
+            </View>
         </View >
     )
 }
@@ -66,7 +73,7 @@ function Cart() {
 export default Cart
 
 
-    // <>
-    //         <Pressable onPress={saveData}><Text>Save Data</Text></Pressable>
-    //         <Pressable onPress={loadData}><Text>Load Data</Text></Pressable>
-    //     </>
+// <>
+//         <Pressable onPress={saveData}><Text>Save Data</Text></Pressable>
+//         <Pressable onPress={loadData}><Text>Load Data</Text></Pressable>
+//     </>
