@@ -10,7 +10,7 @@ import { GlobalStyles } from '../components/theme/Colors'
 import Payment from '../components/Payment/Payment'
 
 let selectedProduct
-function Cart() {
+function Cart({ navigation }) {
     const context = ShopConsumer()
     const { state, setSearchTerm, cartRemoval } = context
 
@@ -21,7 +21,7 @@ function Cart() {
             selectedProductSize,
             selectedProductColor
         )
-        console.log(selectedProduct)
+        //console.log(selectedProduct)
     }
     function itemRenderer(e) {
         return (

@@ -27,12 +27,11 @@ function ViewProduct({ route, navigation }) {
     const context = ShopConsumer()
     const { state, cart } = context
     function addtoCart(product) {
-        console.log("will be activated soon");
+        console.log("will be activated soon")
         if (
             tempColor !== undefined &&
             tempSize !== undefined
         ) {
-
             const quantityy = { quantity: quantity === undefined ? 1 : quantity }
             const color = { color: tempColor }
             const size = { size: tempSize }
@@ -42,6 +41,7 @@ function ViewProduct({ route, navigation }) {
                 { product_img1: allProducts.product_img1 },
                 { product_title: allProducts.product_title },
                 { product_price: allProducts.product_price },
+                { product_category: allProducts.p_cat_id },
                 quantityy,
                 color,
                 size

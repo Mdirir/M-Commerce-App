@@ -1,5 +1,5 @@
 import React, { useContext, Component } from "react"
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const ShopContext = React.createContext()
 class ContextAPI extends Component {
@@ -124,6 +124,9 @@ class ContextAPI extends Component {
     }
     await AsyncStorage.setItem("products", JSON.stringify(this.state))
   }
+  updateState = (newState) => {
+    this.setState(newState)
+  }
   render() {
     return (
       // <ShopContext.Provider value={{ removePerson, people }}>
@@ -135,6 +138,7 @@ class ContextAPI extends Component {
           createSession: this.createSession,
           destroySession: this.destroySession,
           setSearchTerm: this.setSearchTerm,
+          updateState: this.updateState
         }}
       >
         {this.props.children}

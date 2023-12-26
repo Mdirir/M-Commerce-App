@@ -1,28 +1,30 @@
 import Shadow from '../components/ui/Shadow'
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native'
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react'
 import axios from "axios"
-import FeaturedProduct from '../components/products/FeaturedProduct';
-import Products from '../components/products/Products';
-import { ActivityIndicator } from 'react-native';
-import { useColorScheme } from 'nativewind';
-import { Button } from 'react-native';
-import { Image } from 'react-native';
-import * as FileSystem from 'expo-file-system';
+import FeaturedProduct from '../components/products/FeaturedProduct'
+import Products from '../components/products/Products'
+import { ActivityIndicator } from 'react-native'
+import { useColorScheme } from 'nativewind'
+import { Button } from 'react-native'
+import { Image } from 'react-native'
+import * as FileSystem from 'expo-file-system'
 import * as ImagePicker from 'expo-image-picker'
 import { firebase } from '../config'
-import { Switch } from 'react-native';
-import InsetShadow from 'react-native-inset-shadow';
-import { AntDesign } from '@expo/vector-icons';
-import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import AddProduct from '../components/Admin/AddProduct';
-import AdminProducts from '../components/Admin/AdminProducts';
-import { ShopConsumer } from '../store/context';
+import { Switch } from 'react-native'
+import InsetShadow from 'react-native-inset-shadow'
+import { AntDesign } from '@expo/vector-icons'
+import { Ionicons } from '@expo/vector-icons'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import AddProduct from '../components/Admin/AddProduct'
+import AdminProducts from '../components/Admin/AdminProducts'
+import { ShopConsumer } from '../store/context'
+import Slider from '@react-native-community/slider'
 
 function Admin(props) {
     const [toggleProductView, setTogleProductView] = useState(false)
     const [toggleProductAdd, setTogleProductAdd] = useState(false)
+
     const context = ShopConsumer()
     const { destroySession } = context
 
@@ -73,6 +75,7 @@ function Admin(props) {
                             </InsetShadow>
                         </View>
                     </View>
+
                 </View>
             </ScrollView>
         </SafeAreaView>

@@ -1,19 +1,21 @@
 import { View, Text, ActivityIndicator, Alert } from 'react-native'
-import { AntDesign } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { Pressable } from 'react-native';
-import { ImageBackground } from 'react-native';
-import { images } from '../../assets/Images';
-import { FlatList } from 'react-native-gesture-handler';
-import InsetShadow from 'react-native-inset-shadow';
-import { color } from 'react-native-reanimated';
-import { StyleSheet } from 'react-native';
-import Shadow from '../ui/Shadow';
-import { useNavigation } from '@react-navigation/native';
-import { useLayoutEffect, useState } from 'react';
-import axios from 'axios';
-import { getStorage, ref, listAll, deleteFile, deleteObject } from "firebase/storage";
+import { AntDesign } from '@expo/vector-icons'
+import { FontAwesome5 } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
+import { Pressable } from 'react-native'
+import { ImageBackground } from 'react-native'
+import { images } from '../../assets/Images'
+import { FlatList } from 'react-native-gesture-handler'
+import InsetShadow from 'react-native-inset-shadow'
+import { color } from 'react-native-reanimated'
+import { StyleSheet } from 'react-native'
+import Shadow from '../ui/Shadow'
+import { useNavigation } from '@react-navigation/native'
+import { useLayoutEffect, useState } from 'react'
+import axios from 'axios'
+import { getStorage, ref, listAll, deleteFile, deleteObject } from "firebase/storage"
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import Slider from '@react-native-community/slider'
 
 const demoProduct = [{
     "product_id": "255",
@@ -40,6 +42,28 @@ const demoProduct = [{
 function Products(props) {
     const [products, setProducts] = useState([]) //update this
     const [loading, setIsLoading] = useState(true)//update this
+    const [jacket, setJacket] = useState(1)
+    const [dress, setDress] = useState(1)
+    const [trouser, setTrouser] = useState(1)
+    const [shirt, setShirt] = useState(1)
+    const [tshirt, setTshirt] = useState(1)
+    const [shoes, setShoes] = useState(1)
+    async function filterHandler() {
+        const categoryWeights = {//give admin control and save this as local data
+            'jacket': jacket,//dobles that
+            'shirt': shirt,
+            't-shirt': tshirt,
+            'shoes': shoes,
+            'dress': dress,
+            'trouser': trouser,
+        }
+        await AsyncStorage.setItem("WeightsAndBaises", JSON.stringify(categoryWeights))
+        Alert.alert(
+            "Receommendation",
+            "Recommendation Sytem has been changed",
+        )
+    }
+
     useLayoutEffect(() => {
         async function fetchData() {
             try {
@@ -63,7 +87,7 @@ function Products(props) {
         // }
     }, [])
     async function pressedHandler(product) {
-        console.log('i was here');
+        console.log('i was here')
         const images = [product.product_img1, product.product_img1, product.product_img3]
         //const images = ['5265060765530143379_2048.jpg', '17192130095305642251_2048.jpg', '10100521308508491030_2048.jpg']
         try {
@@ -92,16 +116,16 @@ function Products(props) {
                 )
                 //Delete images from Firabase
                 await Promise.all(images.map(async (path) => {
-                    await deleteImage(path); // Wait for each image deletion before logging
-                }));
+                    await deleteImage(path) // Wait for each image deletion before logging
+                }))
                 async function deleteImage(path) {
                     try {
                         const storage = getStorage()
-                        const imageRef = ref(storage, path); // Create a reference to the image
-                        await deleteObject(imageRef); // Delete the image
+                        const imageRef = ref(storage, path) // Create a reference to the image
+                        await deleteObject(imageRef) // Delete the image
                         // console.log(`Image "${path}" deleted successfully!`);
                     } catch (error) {
-                        console.error(`Error deleting files:`, error);
+                        console.error(`Error deleting files:`, error)
                     }
                 }
             }
@@ -255,6 +279,94 @@ function Products(props) {
                         Total Products in Stock: {products.map(product => parseInt(product.stock)).reduce((acc, quantity) => acc + quantity, 0)}
                     </Text>
                 </InsetShadow>
+            </View>
+            <View>
+                <View className='h-96 mx-4 mb-4'>
+                    <InsetShadow containerStyle={{ borderRadius: 8 }}>
+                        <View>
+                            <Text className='p-3 text-lg text-center'>Recommedation System</Text>
+                            <View className='flex flex-row justify-center content-center items-center'>
+                                <Text>Jacket</Text>
+                                <Slider
+                                    style={{ width: 200, height: 40, marginLeft: 5 }}
+                                    minimumValue={1}
+                                    maximumValue={10}
+                                    step={1}
+                                    minimumTrackTintColor="#FFFFFF"
+                                    maximumTrackTintColor="#000000"
+                                    onValueChange={(e) => { setJacket(parseInt(e)) }}
+                                />
+                            </View>
+                            <View className='flex flex-row justify-center content-center items-center'>
+                                <Text>Dress</Text>
+                                <Slider
+                                    style={{ width: 200, height: 40, marginLeft: 10 }}
+                                    minimumValue={1}
+                                    maximumValue={10}
+                                    step={1}
+                                    minimumTrackTintColor="#FFFFFF"
+                                    maximumTrackTintColor="#000000"
+                                    onValueChange={(e) => { setDress(parseInt(e)) }}
+                                />
+                            </View>
+                            <View className='flex flex-row justify-center content-center items-center'>
+                                <Text>Shoes</Text>
+                                <Slider
+                                    style={{ width: 200, height: 40, marginLeft: 10 }}
+                                    minimumValue={1}
+                                    maximumValue={10}
+                                    step={1}
+                                    minimumTrackTintColor="#FFFFFF"
+                                    maximumTrackTintColor="#000000"
+                                    onValueChange={(e) => { setShoes(parseInt(e)) }}
+                                />
+                            </View>
+                            <View className='flex flex-row justify-center content-center items-center'>
+                                <Text>Shirt</Text>
+                                <Slider
+                                    style={{ width: 200, height: 40, marginLeft: 19 }}
+                                    minimumValue={1}
+                                    maximumValue={10}
+                                    step={1}
+                                    minimumTrackTintColor="#FFFFFF"
+                                    maximumTrackTintColor="#000000"
+                                    onValueChange={(e) => { setShirt(parseInt(e)) }}
+                                />
+                            </View>
+                            <View className='flex flex-row justify-center content-center items-center'>
+                                <Text>T-shirt</Text>
+                                <Slider
+                                    style={{ width: 200, height: 40, marginLeft: 10 }}
+                                    minimumValue={1}
+                                    maximumValue={10}
+                                    step={1}
+                                    minimumTrackTintColor="#FFFFFF"
+                                    maximumTrackTintColor="#000000"
+                                    onValueChange={(e) => { setTshirt(parseInt(e)) }}
+                                />
+                            </View>
+                            <View className='flex flex-row justify-center content-center items-center'>
+                                <Text>Trouser</Text>
+                                <Slider
+                                    style={{ width: 200, height: 40, marginLeft: 4 }}
+                                    minimumValue={1}
+                                    maximumValue={10}
+                                    step={1}
+                                    minimumTrackTintColor="#FFFFFF"
+                                    maximumTrackTintColor="#000000"
+                                    onValueChange={(e) => { setTrouser(parseInt(e)) }}
+                                />
+                            </View>
+                            <View className='flex flex-row justify-center content-center items-center my-3'>
+                                <InsetShadow>
+                                    <Pressable onPress={() => { filterHandler() }}>
+                                        <Text className='p-4 text-lg'>Apply Changes</Text>
+                                    </Pressable>
+                                </InsetShadow>
+                            </View>
+                        </View>
+                    </InsetShadow>
+                </View>
             </View>
             <View>
                 {products.map((e) => itemRenderer(e))}

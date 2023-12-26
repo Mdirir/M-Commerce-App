@@ -3,7 +3,7 @@ import { ImageBackground, Text, View } from 'react-native'
 import { images } from '../../assets/Images'
 
 function FeaturedProduct(props) {
-    let products = props.products
+    const products = props.products
     return (
 
         <View className="flex flex-row gap-3 justify-between items-center flex-wrap ">
