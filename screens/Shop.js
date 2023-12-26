@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useLayoutEffect } from 'react'
-import { Pressable, View } from 'react-native'
+import { ActivityIndicator, Pressable, View } from 'react-native'
 import { Text } from 'react-native'
 import Products from '../components/products/Products'
 import { ShopConsumer } from '../store/context'
@@ -11,6 +11,7 @@ import { FlatList, ScrollView } from 'react-native-gesture-handler'
 import InsetShadow from 'react-native-inset-shadow'
 import ShadowInset from '../components/ui/ShadowInset'
 import { Divider } from 'react-native-paper'
+import ShopProducts from '../components/products/ShopProducts'
 
 function Shop({ navigation }) {
     async function loadSession() {
@@ -163,9 +164,9 @@ function Shop({ navigation }) {
             </View>
             <View className="mb-5">
                 {products ? (
-                    <Products products={products} />
+                    <ShopProducts products={products} />
                 ) : (
-                    ""
+                    <ActivityIndicator size="small" color="green" />
                 )}
             </View>
         </View>

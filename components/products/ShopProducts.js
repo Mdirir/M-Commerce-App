@@ -12,7 +12,7 @@ import { StyleSheet } from 'react-native'
 import Shadow from '../ui/Shadow'
 import { useNavigation } from '@react-navigation/native'
 
-function Products(props) {
+function ShopProducts(props) {
     const navigation = useNavigation()
     function pressedHandler(product) {
         navigation.navigate('View', {
@@ -115,45 +115,45 @@ function Products(props) {
         }
     }
     function itemRenderer(e) {
-        const rating = getRating(e.product_rating)
+        const rating = getRating(e.item.product_rating)
         return (
-            <View className="h-auto flex flex-1 gap-2 mb-2  ml-3" key={e.product_id}>
+            <View className="h-auto flex flex-1 gap-2 mb-2">
                 <View>
                     <Shadow shadowColor={[styles.card, styles.shadowProp]}>
                         <ImageBackground
                             // key={index}
-                            source={images[e.product_id][1]}
+                            source={images[e.item.product_id][1]}
                             resizeMode='cover'
-                            className="w-fit h-[285px] bg-cover bg-no-repeat rounded-t-lg"
+                            className="w-fit h-[185px] bg-cover bg-no-repeat rounded-t-lg"
                         />
                         {/* <View className={styles.View}> */}
                         <View className="grid items-center text-center rounded-b-lg dark:bg-colorDark">
                             <Text className="capitalize text-sm font-medium bg-opacity-0 mt-1 dark:text-white">
-                                {e.product_title}
+                                {e.item.product_title}
                             </Text>
                             <Text className="capitalize text-xl flex justify-center">
                                 {rating}
                             </Text>
                             <Text className="capitalize text-sm font-medium  bg-opacity-0 dark:text-white">
-                                $ {e.product_price}
+                                $ {e.item.product_price}
                             </Text>
                             <View className="flex-1 flex-row justify-between content-between bg-opacity-0 mb-2 mx-2">
                                 <View className='flex flex-row w-full justify-between'>
 
-                                    <InsetShadow containerStyle={{ borderRadius: 8 }}>
-                                        <Pressable onPress={() => pressedHandler(e)}
-                                            className=" bg-opacity-0 flex flex-row justify-center items-center content-center text-center py-2 px-3 rounded-lg" android_ripple={{ color: '#ccc' }}
+                                    <InsetShadow containerStyle={{ marginRight: 2, borderRadius: 8 }}>
+                                        <Pressable onPress={() => pressedHandler(e.item)}
+                                            className=" bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 rounded-lg" android_ripple={{ color: '#ccc' }}
                                         >
                                             <FontAwesome5 name="eye" size={24} color="black" />
-                                            <Text className='p-2'> View</Text>
+                                            <Text className='p-1'> View</Text>
                                         </Pressable>
                                     </InsetShadow>
-                                    <InsetShadow containerStyle={{ borderRadius: 8 }}>
-                                        <Pressable onPress={() => pressedHandler(e)}
-                                            className="bg-opacity-0 flex flex-row justify-center items-center content-center text-center py-2 px-4 rounded-lg" android_ripple={{ color: '#ccc' }}
+                                    <InsetShadow containerStyle={{ marginRight: 2, borderRadius: 8 }}>
+                                        <Pressable onPress={() => pressedHandler(e.item)}
+                                            className="bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 rounded-lg" android_ripple={{ color: '#ccc' }}
                                         >
                                             <FontAwesome name="shopping-cart" size={24} color="black" />
-                                            <Text className='p-2'> Cart</Text>
+                                            <Text className='p-1'> Cart</Text>
                                         </Pressable>
                                     </InsetShadow>
                                 </View>
@@ -165,8 +165,7 @@ function Products(props) {
         )
     }
     return (
-        //<FlatList data={products} key={(key) => key.product_id} renderItem={itemRenderer} numColumns={2} />
-        products.map((e) => itemRenderer(e)) //FlatList was clashing with scrollview needed to be horizotal={true} // but we don't need horizontal 
+        <FlatList data={products} key={(key) => key.product_id} renderItem={itemRenderer} numColumns={2} /> //render item and map are different
     )
 }
 
@@ -193,4 +192,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Products
+export default ShopProducts
