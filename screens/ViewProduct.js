@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Alert, Pressable, StyleSheet, TextInput } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Alert, Button, Pressable, StyleSheet, TextInput } from 'react-native'
 import { Text } from 'react-native'
 import { View } from 'react-native'
 import { FlatList, ScrollView } from 'react-native-gesture-handler'
@@ -8,6 +8,8 @@ import { Divider } from 'react-native-paper'
 import Slider from '../components/Slider'
 import Shadow from '../components/ui/Shadow'
 import { ShopConsumer } from '../store/context'
+import { firebase } from '../config'
+import { getDownloadURL } from "firebase/storage"
 
 
 //userinput
@@ -23,6 +25,7 @@ function ViewProduct({ route, navigation }) {
     const color = colorArr.split(", ")
     const descArr = main_product.product_desc
     const desc = descArr.split(", ")
+    const [firebaseImges, settFirebaseImges] = useState()
 
     const context = ShopConsumer()
     const { state, cart } = context
@@ -61,6 +64,29 @@ function ViewProduct({ route, navigation }) {
             quantity = data
         }
     }
+    //initate images
+    useEffect(() => {
+        getAllImages()
+    }, [])
+    function getAllImages() {
+        const images = [allProducts.product_img1, allProducts.product_img2, allProducts.product_img3]
+        const imgURL = Promise.all(images.map(async (imageName) => {
+            const imageRef = firebase.storage().ref().child(imageName)
+            let url
+            try {
+                url = await getDownloadURL(imageRef)
+            } catch (error) {
+                Alert.alert('Error', 'Error fetching images from firebase')
+            }
+            return url
+        })).then(urls => {
+            settFirebaseImges(urls)
+        }).catch(error => {
+            // Handle any errors
+            Alert.alert(error, 'Error fetching images from firebase!')
+        })
+    }
+    //UI
     function sizeRenderer(e) {
         return (
             <InsetShadow containerStyle={{ flex: 1, borderRadius: 8, marginRight: 10 }}>
@@ -86,10 +112,11 @@ function ViewProduct({ route, navigation }) {
             </InsetShadow>
         )
     }
+
     return (
         <ScrollView>
             <View className='flex flex-1 mb-10'>
-                <Slider product_id={allProducts.product_id} />
+                {firebaseImges ? <Slider product_images={firebaseImges} /> : ""}
                 <View className='bg-green-500 rounded-lg mx-2 my-2'>
                     <Shadow shadowColor={[styles.card, styles.shadowProp]} >
                         <Text className='font-extrabold p-4'>Gucci T-shirt</Text>

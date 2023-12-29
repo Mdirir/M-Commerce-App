@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { View, ImageBackground, Pressable } from 'react-native'
-import { FontAwesome5 } from '@expo/vector-icons';
-import { images as imagess } from '../assets/Images';
+import { FontAwesome5 } from '@expo/vector-icons'
+import { images as imagess } from '../assets/Images'
 
-function Slider({ product_id }) {
-    let images = [1, 2, 3]
+function Slider({ product_images }) {
+    let images = [0, 1, 2]
     const [index, setIndex] = useState(0)
     useEffect(() => {
         const lastIndex = images.length - 1
@@ -28,21 +28,21 @@ function Slider({ product_id }) {
             <View className="w-36 grid gap-3">
                 <Pressable onPress={() => setIndex(1)} android_ripple={{ color: "#ccc" }}>
                     <ImageBackground
-                        source={imagess[product_id][1]}
+                        source={{ uri: product_images[0] }}
                         resizeMode='cover'
                         className="w-fit h-[185px] rounded-t-lg"
                     />
                 </Pressable>
                 <Pressable onPress={() => setIndex(1)} android_ripple={{ color: "#ccc" }}>
                     <ImageBackground
-                        source={imagess[product_id][2]}
+                        source={{ uri: product_images[1] }}
                         resizeMode='cover'
                         className="w-fit h-[185px] rounded-t-lg bg-green-500"
                     />
                 </Pressable>
                 <Pressable onPress={() => setIndex(2)} android_ripple={{ color: "#ccc" }}>
                     <ImageBackground
-                        source={imagess[product_id][3]}
+                        source={{ uri: product_images[2] }}
                         resizeMode='cover'
                         className="w-fit h-[185px]  rounded-t-lg bg-green-500"
                     />
@@ -52,7 +52,7 @@ function Slider({ product_id }) {
                 <View className=" w-full rounded-lg">
                     <View className="relative rounded-lg">
                         <ImageBackground
-                            source={imagess[product_id][images[index]]}
+                            source={{ uri: product_images[images[index]] }}
                             resizeMode='cover'
                             className="text-center flex flex-row content-center justify-between items-center relative h-[550] rounded-lg "
                         >
