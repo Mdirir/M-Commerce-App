@@ -1,15 +1,21 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useNavigation } from "@react-navigation/native"
-import { Alert, Pressable, Text, View } from "react-native"
+import { ActivityIndicator, Alert, Pressable, Text, View } from "react-native"
 import InsetShadow from "react-native-inset-shadow"
 import { ShopConsumer } from "../../store/context"
+import { StripeProvider, usePaymentSheet } from "@stripe/stripe-react-native"
+import { useEffect, useState } from "react"
+import axios from "axios"
 
 function Payment(props) {
+    const { initPaymentSheet, presentPaymentSheet } = usePaymentSheet()
     const navigation = useNavigation()
     const context = ShopConsumer()
     const { updateState } = context
-    //console.log(props.totalPrice);
-    //console.log(props.product_title);
+    const [paymentPrepration, setPaymentPrepration] = useState(false) //incase server side failure
+    const [loading, setLoading] = useState(false)
+
+    //Remove Reccommendation
     async function resetCart() {
         const ress = await AsyncStorage.getItem("products")
         const res = JSON.parse(ress)
@@ -18,21 +24,13 @@ function Payment(props) {
         res.product = []
         res.totalPrice = 0
         try {
-            await updateState(res).then(Alert.alert(
-                "Successful",
-                "Your payment is successfull",
-                [
-                    { text: "OK", onPress: () => navigation.push('Homepage') }
-                ]
-            ))
+            await updateState(res)
         } catch (error) {
             console.log('error resseting the cart', error)
         }
     }
     async function handlePayment() {
         //username
-        //console.log(props.userName);
-        console.log(props.allProducts)
         //add to existing userhistory if any
         const UserProducts = [{
             [props.userName]: props.allProducts
@@ -103,15 +101,101 @@ function Payment(props) {
         //console.log(UserProducts[0]['simp'].map((i, index) => console.log(i)), 'ABCDE')
         //console.log(userSales);
     }
-    return <View className='justify-center items-center content-center flex flex-row'>
-        {props.allProducts.length !== 0 ? <InsetShadow containerStyle={{ borderRadius: 8 }} >
-            <Pressable onPress={() => handlePayment()} android_ripple={{ color: '#ccc' }}>
-                <Text className='text-center p-4 text-lg'>
-                    Proceed Payment
-                </Text>
-            </Pressable>
-        </InsetShadow> : <View></View>}
-    </View>
+    const fetchPaymentSheetParams = async () => {//1
+        try {
+            const response = await axios.get(
+                `${process.env.REACT_APP_HTTP_LINK}/product/mobilePayment`,
+                {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
+                        id: 'cus_OYak6WQX4Y4jzE',
+                        category: props.product_title,
+                        amount: props.totalPrice + '00'
+                    }
+                })
+            const { paymentIntent, ephemeralKey, customer } = response.data
+            return { paymentIntent, ephemeralKey, customer }
+        } catch (error) {
+            console.log(error, 'error fetching Stripe params')
+            setPaymentPrepration(true)
+        }
+    }//2nd
+    async function initialisePaymentSheet() {
+        try {
+            const { paymentIntent, ephemeralKey, customer } = await fetchPaymentSheetParams()
+            //console.log(paymentIntent, ephemeralKey, customer, 'yooo')
+            const { error } = await initPaymentSheet({
+                customerId: customer,
+                customerEphemeralKeySecret: ephemeralKey,
+                paymentIntentClientSecret: paymentIntent,
+                allowsDelayedPaymentMethods: false,
+                merchantDisplayName: 'Acme Fashion Inc.',
+                customFlow: false,
+                style: 'alwaysDark',
+                //returnURL:""
+            })
+            if (!error) {
+                console.log('sicesss', error)
+                // setLoading(true)
+
+            }
+        } catch (error) {
+            Alert.alert(error, 'error while trying to fetch params')
+            //setPaymentPrepration(true) check if there's error fetching these info
+        }
+
+    }
+    //Stripe Payment
+    useEffect(() => {
+        initialisePaymentSheet()
+    }, [])
+    async function buy() {
+        setLoading(true)
+        const { error } = await presentPaymentSheet()
+
+        if (error) {
+            Alert.alert(`Error code: ${error.code}`, error.message)
+            setLoading(false)
+        } else {
+            setLoading(false)
+            Alert.alert('Success', 'Your order is confirmed!')
+            handlePayment()
+        }
+    }
+    return <StripeProvider publishableKey={"pk_test_51LCgyhHxnP45lSO9a4uFqTT3Yt0WI43jgac3CwWNNeEBILQ7BG0rKf8ofpVju9HGhQM51ajaAgZSJQ39gZENoCSn00ulcgApCz"}
+        merchantIdentifier={null}>
+        <View className='justify-center items-center content-center flex flex-row'>
+
+            {props.allProducts.length !== 0 ? <InsetShadow containerStyle={{ borderRadius: 8 }} >
+                <Pressable onPress={() => buy()} android_ripple={{ color: '#ccc' }}>
+                    <View className='flex flex-row mx-3'>
+                        <Text className='text-center p-4 text-lg'>
+                            Proceed Payment
+                        </Text>
+                        {!loading ? <ActivityIndicator size="small" color="green" /> : ""}
+                    </View>
+                </Pressable>
+            </InsetShadow> : <View></View>}
+        </View>
+    </StripeProvider>
 }
 
 export default Payment
+
+
+/*
+<View className='justify-center items-center content-center flex flex-row'>
+        <StripeProvider
+            publishableKey={"pk_test_51LCgyhHxnP45lSO9a4uFqTT3Yt0WI43jgac3CwWNNeEBILQ7BG0rKf8ofpVju9HGhQM51ajaAgZSJQ39gZENoCSn00ulcgApCz"}
+        >
+            {props.allProducts.length !== 0 ? <InsetShadow containerStyle={{ borderRadius: 8 }} >
+                <Pressable onPress={() => buy()} android_ripple={{ color: '#ccc' }}>
+                    <Text className='text-center p-4 text-lg'>
+                        Proceed Payment
+                    </Text>
+                </Pressable>
+            </InsetShadow> : <View></View>}
+        </StripeProvider>
+    </View>
+*/
