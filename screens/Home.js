@@ -42,12 +42,12 @@ function Home({ navigation }) {
                 const purchase = await AsyncStorage.getItem("UserPurchaseHisory")
                 const UserPurchaseHisory = JSON.parse(purchase) ///IF THIS GUY IS MEPTY CANCEL THE WHOLE PROCESS
                 if (UserPurchaseHisory) {
-                    console.log(UserPurchaseHisory[0]['simp'].map((i, index) => console.log(i)), 'ABCDE')
+                    //console.log(UserPurchaseHisory[0]['simp'].map((i, index) => console.log(i)), 'ABCDE')
 
                     const weights = await AsyncStorage.getItem("WeightsAndBaises") //Admin sets them app
                     const categoryWeights = JSON.parse(weights)
                     //Logic 3 jacket found in purchaseHitory = 3 X jacket bais (3) = 3x3=9 items if possible.
-                    console.log(categoryWeights)
+                    //console.log(categoryWeights)
                     /*const categoryWeights = {//give admin control and save this as local data
                         'jacket': 2,//dobles that
                         'shirt': 2,
