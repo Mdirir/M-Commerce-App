@@ -1,5 +1,5 @@
-import { View, StyleSheet, Pressable } from 'react-native';
-import { styled, useColorScheme } from "nativewind";
+import { View, StyleSheet, Pressable } from 'react-native'
+import { styled, useColorScheme } from "nativewind"
 import {
     useTheme,
     Avatar,
@@ -10,16 +10,17 @@ import {
     Text,
     TouchableRipple,
     Switch
-} from 'react-native-paper';
+} from 'react-native-paper'
 import {
     DrawerContentScrollView,
     DrawerItem
-} from '@react-navigation/drawer';
+} from '@react-navigation/drawer'
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { SimpleLineIcons } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
-import { ShopConsumer } from '../../store/context';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { SimpleLineIcons } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons'
+import { Octicons } from '@expo/vector-icons'
+import { ShopConsumer } from '../../store/context'
 
 export default function CustomDrawer(props) {
     const context = ShopConsumer()
@@ -35,7 +36,7 @@ export default function CustomDrawer(props) {
     }
     return (
         // <View style={{ flex: 1 }}>
-        <View className='flex-1'>
+        <View style={{ flex: 1, backgroundColor: colorScheme === 'light' ? "" : "#18140f" }}>
             <DrawerContentScrollView {...props}>
                 <View style={styles.drawerContent}>
                     <View style={styles.userInfoSection}>
@@ -53,14 +54,15 @@ export default function CustomDrawer(props) {
                             icon={({ color, size }) => (
                                 <FontAwesome
                                     name="home"
-                                    color={color}
+                                    color={colorScheme === 'light' ? color : "#ccc"}
                                     size={size + 5}
                                 />
                             )}
                             label="Home"
+                            inactiveTintColor={colorScheme === 'light' ? 'black' : "#ccc"}
                             // inactiveBackgroundColor='red'
                             onPress={() => {
-                                props.navigation.navigate('Home');//below ln doens't wor
+                                props.navigation.navigate('Home')//below ln doens't wor
                                 props.navigation.setOptions = { Title: "HomeScreen", headerStyle: { backgroundColor: "#3c0a6b" }, headerTintColor: 'white', drawerStyle: { backgroundColor: '#ccc' }, drawerActiveTintColor: '#3c0a6b', drawerActiveBackgroundColor: "#f0e1ff", }
                             }}
                         />
@@ -68,40 +70,49 @@ export default function CustomDrawer(props) {
                             icon={({ color, size }) => (
                                 <SimpleLineIcons
                                     name="handbag"
-                                    color={color}
+                                    color={colorScheme === 'light' ? color : "#ccc"}
                                     size={size}
                                 />
                             )}
                             label="Shop"
+                            inactiveTintColor={colorScheme === 'light' ? 'black' : "#ccc"}
                             onPress={() => { props.navigation.navigate('Shop') }}
                         />
                         <DrawerItem
                             icon={({ color, size }) => (
                                 <SimpleLineIcons
                                     name="magnifier"
-                                    color={color}
+                                    color={colorScheme === 'light' ? color : "#ccc"}
                                     size={size}
                                 />
                             )}
                             label="Search"
+                            inactiveTintColor={colorScheme === 'light' ? 'black' : "#ccc"}
                             onPress={() => { props.navigation.navigate('Search') }}
                         />
                         <DrawerItem
                             icon={({ color, size }) => (
                                 <Icon
                                     name="cart"
-                                    color={color}
+                                    color={colorScheme === 'light' ? color : "#ccc"}
                                     size={size}
                                 />
                             )}
                             label="Cart"
+                            inactiveTintColor={colorScheme === 'light' ? 'black' : "#ccc"}
                             onPress={() => { props.navigation.navigate('Cart') }}
                         />
 
                     </Drawer.Section>
-                    <Drawer.Section title="Preferences">
+                    <Drawer.Section title={
+                        <Text style={{ color: colorScheme === 'light' ? 'black' : "#ccc" }}>Preferences</Text>
+                    }>
                         <Pressable onPress={toggleColorScheme}>
-                            <Text> Theme - {colorScheme}</Text>
+                            <Text className='text-lg m-3 dark:text-white text-red'> Theme                     <Octicons
+                                name={colorScheme === 'light' ? "moon" : "sun"}
+                                color={colorScheme === 'light' ? 'black' : "orange"}
+                                size={24}
+                            /></Text>
                         </Pressable>
                     </Drawer.Section>
                 </View>
@@ -111,18 +122,19 @@ export default function CustomDrawer(props) {
                     icon={({ color, size }) => (
                         <Icon
                             name="exit-to-app"
-                            color={color}
+                            color={colorScheme === 'light' ? color : "#ccc"}
                             size={size}
                         />
                     )}
                     // activeBackgroundColor='red'
                     // inactiveBackgroundColor='yellow'
                     label="Sign Out"
+                    inactiveTintColor={colorScheme === 'light' ? 'black' : "#ccc"}
                     onPress={() => { signOut() }}
                 />
             </Drawer.Section>
         </View>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -169,4 +181,4 @@ const styles = StyleSheet.create({
         paddingVertical: 12,
         paddingHorizontal: 16,
     },
-});
+})

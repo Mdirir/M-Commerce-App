@@ -53,16 +53,33 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="Shop" component={Shop}
-            options={{ sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
+            options={{
+              cardStyle: { backgroundColor: 'yellow' },
+              headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+              headerTintColor: colorScheme === 'light' ? 'black' : "white"
+            }} />
           <Stack.Screen name="View" component={ViewProduct}
             options={({ route }) => {
               const title = route.params.title
               return {
                 title: title
+              }, {
+                cardStyle: { backgroundColor: 'yellow' },
+                headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+                headerTintColor: colorScheme === 'light' ? 'black' : "white"
               }
             }} />
-          <Stack.Screen name="Cart" component={Cart} />
-          <Stack.Screen name="Search" component={Search} />
+          <Stack.Screen name="Cart" component={Cart} options={{
+            cardStyle: { backgroundColor: 'yellow' },
+            headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+            headerTintColor: colorScheme === 'light' ? 'black' : "white"
+          }}
+          />
+          <Stack.Screen name="Search" component={Search} options={{
+            cardStyle: { backgroundColor: 'yellow' },
+            headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+            headerTintColor: colorScheme === 'light' ? 'black' : "white"
+          }} />
           <Stack.Screen name="Auth" component={Auth}
             options={{ headerBackVisible: false, title: "Authentication", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
         </Stack.Navigator>

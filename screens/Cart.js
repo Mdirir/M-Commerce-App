@@ -8,9 +8,11 @@ import { FontAwesome5 } from '@expo/vector-icons'
 import { inherit } from 'tailwindcss/colors'
 import { GlobalStyles } from '../components/theme/Colors'
 import Payment from '../components/Payment/Payment'
+import { useColorScheme } from 'nativewind'
 
 let selectedProduct
 function Cart({ navigation }) {
+    const { colorScheme, toggleColorScheme } = useColorScheme()
     const context = ShopConsumer()
     const { state, setSearchTerm, cartRemoval } = context
 
@@ -25,7 +27,7 @@ function Cart({ navigation }) {
     }
     function itemRenderer(e) {
         return (
-            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8, marginRight: 10, marginBottom: 5, }} shadowRadius={120} elevation={10}>
+            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8, marginRight: 10, marginBottom: 5, }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
                 <View className='flex flex-1 flex-row justify-between items-center rounded-lg mt-2 p-1 mb-1'>
                     <ImageBackground
                         source={images[e.item.product_id][1]}
@@ -58,13 +60,13 @@ function Cart({ navigation }) {
         )
     }
     return (
-        <View className='rounded-lg p-2 flex flex-col justify-between flex-1 '>
+        <View className='rounded-lg p-2 flex flex-col justify-between flex-1 dark:bg-colorDark'>
             <View>
-                < Text className='font-extrabold py-3 dark:text-white' > Total Items In Cart: {state.inCart}</ Text>
+                < Text className='font-extrabold py-3 dark:text-white dark:text-white'> Total Items In Cart: {state.inCart}</ Text>
                 <FlatList data={state.product} key={(key) => key.product_id} renderItem={itemRenderer} className='ml-2 rounded-lg' />
             </View>
             <View className='h-16'>
-                <Payment userName={state.session.user.name} product_title={state.product[0] ? state.product[0].product_title : 0} totalPrice={state.totalPrice} allProducts={state.product} />
+                {state.product[0] ? <Payment userName={state.session.user.name} product_title={state.product[0] ? state.product[0].product_title : 0} totalPrice={state.totalPrice} allProducts={state.product} /> : ""}
             </View>
         </View >
     )

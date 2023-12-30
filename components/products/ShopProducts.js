@@ -11,8 +11,10 @@ import { color } from 'react-native-reanimated'
 import { StyleSheet } from 'react-native'
 import Shadow from '../ui/Shadow'
 import { useNavigation } from '@react-navigation/native'
+import { useColorScheme } from 'nativewind'
 
 function ShopProducts(props) {
+    const { colorScheme, toggleColorScheme } = useColorScheme()
     const navigation = useNavigation()
     function pressedHandler(product) {
         navigation.navigate('View', {
@@ -25,91 +27,91 @@ function ShopProducts(props) {
         if (rating === "1") {
             return (
                 <>
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <FontAwesome5 name="star-half-alt" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <FontAwesome5 name="star-half-alt" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
                 </>
             )
         } else if (rating === "1.5") {
             return (
                 <>
-                    <AntDesign name="star" size={16} color="black" />
-                    <FontAwesome5 name="star-half-alt" size={24} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <FontAwesome5 name="star-half-alt" size={24} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
                 </>
             )
         } else if (rating === "2") {
             return (
                 <>
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
                 </>
             )
         } else if (rating === "2.5") {
             return (
                 <>
-                    <AntDesign name="star" size={24} color="black" />
-                    <FontAwesome5 name="star-half-alt" size={24} color="black" />
-                    <AntDesign name="staro" size={24} color="black" />
-                    <AntDesign name="staro" size={24} color="black" />
-                    <AntDesign name="staro" size={24} color="black" />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <FontAwesome5 name="star-half-alt" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
                 </>
             )
         } else if (rating === "3") {
             return (
                 <>
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
                 </>
             )
         } else if (rating === "3.5") {
             return (
                 <>
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <FontAwesome5 name="star-half-alt" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <FontAwesome5 name="star-half-alt" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
                 </>
             )
         } else if (rating === "4") {
             return (
                 <>
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="staro" size={16} color="black" />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="staro" size={16} color={colorScheme === "light" ? "black" : "white"} />
                 </>
             )
         } else if (rating === "4.5") {
             return (
                 <>
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <FontAwesome5 name="star-half-alt" size={24} color="black" />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <FontAwesome5 name="star-half-alt" size={24} color={colorScheme === "light" ? "black" : "white"} />
                 </>
             )
         } else {
             return (
                 <>
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
-                    <AntDesign name="star" size={16} color="black" />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                    <AntDesign name="star" size={16} color={colorScheme === "light" ? "black" : "white"} />
                 </>
             )
         }
@@ -117,9 +119,15 @@ function ShopProducts(props) {
     function itemRenderer(e) {
         const rating = getRating(e.item.product_rating)
         return (
-            <View className="h-auto flex flex-1 gap-2 mb-2">
+            <View className="h-auto flex flex-1 gap-2 mb-4">
                 <View>
-                    <Shadow shadowColor={[styles.card, styles.shadowProp]}>
+                    <Shadow shadowColor={[styles.card, {
+                        shadowOffset: { width: 4, height: -2 },
+                        shadowColor: colorScheme === 'light' ? 'rgb(0,0,0,0.2)' : "#18140f",//white his could cause erros dynamically change css
+                        shadowOpacity: 1,
+                        shadowRadius: 20,
+                    }]
+                    }>
                         <ImageBackground
                             // key={index}
                             source={images[e.item.product_id][1]}
@@ -127,7 +135,7 @@ function ShopProducts(props) {
                             className="w-fit h-[185px] bg-cover bg-no-repeat rounded-t-lg"
                         />
                         {/* <View className={styles.View}> */}
-                        <View className="grid items-center text-center rounded-b-lg dark:bg-colorDark">
+                        <View className="grid items-center text-center rounded-b-lg">
                             <Text className="capitalize text-sm font-medium bg-opacity-0 mt-1 dark:text-white">
                                 {e.item.product_title}
                             </Text>
@@ -140,32 +148,35 @@ function ShopProducts(props) {
                             <View className="flex-1 flex-row justify-between content-between bg-opacity-0 mb-2 mx-2">
                                 <View className='flex flex-row w-full justify-between'>
 
-                                    <InsetShadow containerStyle={{ marginRight: 2, borderRadius: 8 }}>
+                                    <InsetShadow containerStyle={{ borderRadius: 8 }}>
                                         <Pressable onPress={() => pressedHandler(e.item)}
-                                            className=" bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 rounded-lg" android_ripple={{ color: '#ccc' }}
+                                            className=" bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 mx-1 rounded-[8px]" android_ripple={{ color: '#ccc' }}
                                         >
-                                            <FontAwesome5 name="eye" size={24} color="black" />
-                                            <Text className='p-1'> View</Text>
+                                            <FontAwesome5 name="eye" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                                            <Text className='p-2'> View</Text>
                                         </Pressable>
                                     </InsetShadow>
-                                    <InsetShadow containerStyle={{ marginRight: 2, borderRadius: 8 }}>
+                                    <InsetShadow containerStyle={{ borderRadius: 8 }}>
                                         <Pressable onPress={() => pressedHandler(e.item)}
-                                            className="bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 rounded-lg" android_ripple={{ color: '#ccc' }}
+                                            className="bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 mx-1 rounded-[8px]" android_ripple={{ color: '#ccc' }}
                                         >
-                                            <FontAwesome name="shopping-cart" size={24} color="black" />
-                                            <Text className='p-1'> Cart</Text>
+                                            <FontAwesome name="shopping-cart" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                                            <Text className='p-2'> Cart</Text>
                                         </Pressable>
                                     </InsetShadow>
                                 </View>
                             </View>
                         </View>
-                    </Shadow>
-                </View>
-            </View>
+                    </Shadow >
+                </View >
+            </View >
         )
     }
     return (
-        <FlatList data={products} key={(key) => key.product_id} renderItem={itemRenderer} numColumns={2} /> //render item and map are different
+        //render item and map are different
+        <View className='mb-14'>
+            <FlatList data={products} key={(key) => key.product_id} renderItem={itemRenderer} numColumns={2} />
+        </View>
     )
 }
 

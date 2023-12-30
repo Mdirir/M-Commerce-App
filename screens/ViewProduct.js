@@ -10,11 +10,14 @@ import Shadow from '../components/ui/Shadow'
 import { ShopConsumer } from '../store/context'
 import { firebase } from '../config'
 import { getDownloadURL } from "firebase/storage"
+import { useColorScheme } from 'nativewind'
+import ShadowTwo from '../components/ui/ShadowTwo'
 
 
 //userinput
 let quantity //doube check this
 function ViewProduct({ route, navigation }) {
+    const { colorScheme, toggleColorScheme } = useColorScheme()
     const [tempSize, setTempSize] = useState()
     const [tempColor, setTempColor] = useState()
     const allProducts = route.params.product
@@ -30,7 +33,7 @@ function ViewProduct({ route, navigation }) {
     const context = ShopConsumer()
     const { state, cart } = context
     function addtoCart(product) {
-        console.log("will be activated soon")
+        // console.log("will be activated soon")
         if (
             tempColor !== undefined &&
             tempSize !== undefined
@@ -89,68 +92,78 @@ function ViewProduct({ route, navigation }) {
     //UI
     function sizeRenderer(e) {
         return (
-            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8, marginRight: 10 }}>
+            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8, marginRight: 10 }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
                 <Pressable onPress={() => handleChange(e.item, 'size')} android_ripple={{ color: '#ccc' }} className={`${tempSize === e.item ? 'border-[1px] border-purple-500 rounded-lg' : ''}`}>
-                    <Text className='mx-2 p-3 capitalize'>{e.item}</Text>
+                    <Text className='mx-2 p-3 capitalize dark:text-white'>{e.item}</Text>
                 </Pressable>
             </InsetShadow>
         )
     }
     function colorRenderer(e) {
         return (
-            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8, marginRight: 10 }}>
+            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8, marginRight: 10 }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
                 <Pressable onPress={() => handleChange(e.item, 'color')} android_ripple={{ color: '#ccc' }} className={`${tempColor === e.item ? 'border-[1px] border-purple-500 rounded-lg' : ''}`}>
-                    <Text className='mx-2 p-3 capitalize'>{e.item}</Text>
+                    <Text className='mx-2 p-3 capitalize dark:text-white'>{e.item}</Text>
                 </Pressable>
             </InsetShadow>
         )
     }
     function descRenderer(e) {
         return (
-            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8, marginRight: 10 }}>
-                <Text className='mx-2 p-3 capitalize'>{e.item}</Text>
+            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8, marginRight: 10 }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
+                <Text className='mx-2 p-3 capitalize dark:text-white'>{e.item}</Text>
             </InsetShadow>
         )
     }
 
     return (
         <ScrollView>
-            <View className='flex flex-1 mb-10'>
+            <View className='flex flex-1 dark:bg-colorDark'>
                 {firebaseImges ? <Slider product_images={firebaseImges} /> : ""}
                 <View className='bg-green-500 rounded-lg mx-2 my-2'>
-                    <Shadow shadowColor={[styles.card, styles.shadowProp]} >
-                        <Text className='font-extrabold p-4'>Gucci T-shirt</Text>
+                    <ShadowTwo shadowColor={[styles.card, {
+                        shadowOffset: { width: 4, height: -2 },
+                        shadowColor: colorScheme === 'light' ? 'rgb(0,0,0,0.2)' : "#18140f",//white his could cause erros dynamically change css
+                        shadowOpacity: 1,
+                        shadowRadius: 20,
+                    }]}>
+                        <Text className='font-extrabold p-4 dark:text-white capitalize'>{allProducts.product_title}</Text>
                         <Divider />
                         <View>
-                            <Text className='font-semibold p-2'>Size:</Text>
+                            <Text className='font-semibold p-2 dark:text-white'>Size:</Text>
                             <FlatList horizontal data={size} key={(key) => key.product_id} renderItem={sizeRenderer} className='ml-7' />
                         </View>
                         <View>
-                            <Text className='font-semibold  p-2'>Color:</Text>
+                            <Text className='font-semibold p-2 dark:text-white'>Color:</Text>
                             <FlatList horizontal data={color} key={(key) => key.product_id} renderItem={colorRenderer} className='ml-7' />
                         </View>
                         <View>
                             <View className='flex flex-row items-center p-2'>
-                                <Text className='p-3'>Quantity: </Text>
-                                <TextInput placeholder='1' onChangeText={(e) => quantity = e} className='p-3 my-2 w-12 text-center shadow border-[1px] border-gray-300' maxLength={2} keyboardType='numeric' />
+                                <Text className='p-3 dark:text-white'>Quantity: </Text>
+                                <TextInput placeholder='1' onChangeText={(e) => quantity = e} className='p-3 my-2 w-12 text-center shadow border-[1px] border-gray-300 dark:text-white' maxLength={2} keyboardType='numeric' />
                             </View>
                         </View>
                         <View className='flex items-center p-2'>
-                            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8 }}>
+                            <InsetShadow containerStyle={{ flex: 1, borderRadius: 8 }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
                                 <Pressable className="rounded-lg" android_ripple={{ color: '#ccc' }} onPress={addtoCart}>
-                                    <Text className='text-center p-4 '>Add to Cart</Text>
+                                    <Text className='text-center p-4 dark:text-white'>Add to Cart</Text>
                                 </Pressable>
                             </InsetShadow>
                         </View>
-                    </Shadow>
+                    </ShadowTwo>
                 </View>
-                <View className='rounded-lg mx-2'>
-                    <Shadow shadowColor={[styles.card, styles.shadowProp]} >
-                        <Text className='font-extrabold p-2'>Product Details</Text>
+                <View className='rounded-lg mx-2 mb-10'>
+                    <ShadowTwo shadowColor={[styles.card, {
+                        shadowOffset: { width: 4, height: -2 },
+                        shadowColor: colorScheme === 'light' ? 'rgb(0,0,0,0.2)' : "#18140f",//white his could cause erros dynamically change css
+                        shadowOpacity: 1,
+                        shadowRadius: 20,
+                    }]}>
+                        <Text className='font-extrabold p-2 dark:text-white'>Product Details</Text>
                         <Divider />
-                        <Text className='font-semibold my-2 p-2'>Description:</Text>
+                        <Text className='font-semibold my-2 p-2 dark:text-white'>Description:</Text>
                         <FlatList horizontal data={desc} key={(key) => key.product_id} renderItem={descRenderer} className='ml-7 mb-2' />
-                    </Shadow>
+                    </ShadowTwo>
                 </View>
             </View>
         </ScrollView>

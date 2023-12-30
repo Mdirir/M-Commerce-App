@@ -6,8 +6,10 @@ import { ShopConsumer } from "../../store/context"
 import { StripeProvider, usePaymentSheet } from "@stripe/stripe-react-native"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import { useColorScheme } from "nativewind"
 
 function Payment(props) {
+    const { colorScheme, toggleColorScheme } = useColorScheme()
     const { initPaymentSheet, presentPaymentSheet } = usePaymentSheet()
     const navigation = useNavigation()
     const context = ShopConsumer()
@@ -167,13 +169,13 @@ function Payment(props) {
         merchantIdentifier={null}>
         <View className='justify-center items-center content-center flex flex-row'>
 
-            {props.allProducts.length !== 0 ? <InsetShadow containerStyle={{ borderRadius: 8 }} >
+            {props.allProducts.length !== 0 ? <InsetShadow containerStyle={{ borderRadius: 8 }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
                 <Pressable onPress={() => buy()} android_ripple={{ color: '#ccc' }}>
                     <View className='flex flex-row mx-3'>
-                        <Text className='text-center p-4 text-lg'>
+                        <Text className='text-center p-4 text-lg dark:text-white'>
                             Proceed Payment
                         </Text>
-                        {!loading ? <ActivityIndicator size="small" color="green" /> : ""}
+                        {loading ? <ActivityIndicator size="small" color="green" /> : ""}
                     </View>
                 </Pressable>
             </InsetShadow> : <View></View>}

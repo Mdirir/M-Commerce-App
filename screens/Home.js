@@ -9,8 +9,10 @@ import InsetShadow from 'react-native-inset-shadow'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import DUMMYPRODUCTS from '../DummyPoducts'
 import Payment from '../components/Payment/Payment'
+import { useColorScheme } from 'nativewind'
 
 function Home({ navigation }) {
+    const { colorScheme, toggleColorScheme } = useColorScheme()
     const [products, setProducts] = useState()
     const [tailoredProducts, setTailoredProducts] = useState()
 
@@ -95,28 +97,17 @@ function Home({ navigation }) {
     return (
         <ScrollView className='flex-1'>
             <View className='mx-2'>
-                <InsetShadow containerStyle={{ marginVertical: 12, borderRadius: 8, height: 50 }}>
-                    <Text style={{
-                        paddingVertical: 14,
-                        paddingHorizontal: 14,
-                        fontWeight: 'bold',
-                        borderRadius: 12
-                    }}>
+                <InsetShadow containerStyle={{ marginVertical: 12, borderRadius: 8, height: 50 }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
+                    <Text className="p-4 font-bold rounded-[8px] dark:text-white">
                         Featured Products
                     </Text>
                 </InsetShadow></View>
             <View className='mx-1'>
                 {products ? <FeaturedProduct products={products.featuredProducts} /> : <ActivityIndicator size="small" color="green" />}
             </View>
-            <View className='mx-2'>
-                <InsetShadow containerStyle={{ marginVertical: 12, borderRadius: 8, height: 50 }}>
-                    <Text style={{
-                        paddingVertical: 14,
-                        paddingHorizontal: 14,
-                        fontWeight: 'bold',
-                        width: '100%',
-                        borderRadius: 12
-                    }}>
+            <View className='mx-2 my-4'>
+                <InsetShadow containerStyle={{ borderRadius: 8, height: 50 }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
+                    <Text className="p-4 font-bold rounded-[8px] dark:text-white">
                         {tailoredProducts ? 'Recommended Products' : 'Latest Products'}
                     </Text>
                 </InsetShadow></View>
