@@ -32,7 +32,10 @@ export default function CustomDrawer(props) {
     //to style this use navigation, screen name -> fid out on your own or pass it params
     function signOut() {
         destroySession()
-        props.navigation.push('Auth')
+        //props.navigation.push('Auth')
+        props.navigation.push('Auth', {
+            routeName: 'RequestAuthAccessUsingPush',
+        })
     }
     return (
         // <View style={{ flex: 1 }}>

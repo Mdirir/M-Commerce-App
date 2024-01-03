@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useLayoutEffect } from 'react'
-import { ActivityIndicator, Pressable, View } from 'react-native'
+import { ActivityIndicator, Alert, Pressable, View } from 'react-native'
 import { Text } from 'react-native'
 import Products from '../components/products/Products'
 import { ShopConsumer } from '../store/context'
@@ -76,10 +76,60 @@ function Shop({ navigation }) {
                     }
                     setPaginateArray(paginateArr)
                 } catch (error) {
+                    if (error.message.includes('401')) {
+                        //Check if session expires and redirect page
+                        Alert.alert(
+                            "Session Expired!",
+                            `${'Ununauthorized Access'}`,
+                            [
+                                {
+                                    text: "Cancel",
+                                    onPress: () => {
+                                        //remove screen from stack
+                                        navigation.pop()
+                                    },
+                                    style: "cancel"
+                                },
+                                {
+                                    text: "OK", onPress: () => {
+                                        //redirect page to auth
+                                        navigation.navigate('Auth', {
+                                            routeName: 'RequestAuthAccess',//send this so we know what kind authentication request is this
+                                        })
+                                    },
+                                    style: "destructive"
+                                }
+                            ]
+                        )
+                    }
                     // console.log("404. Please Login")
                 }
             } else {
-                // navigation.navigate('Auth')
+                //if the user is guest
+                Alert.alert(
+                    "Ununauthorized Access!",
+                    `${'Please Sign in or Register to browse Shop'}`,
+                    [
+                        {
+                            text: "Cancel",
+                            onPress: () => {
+                                //remove screen from stack
+                                navigation.pop()
+                            },
+                            style: "cancel"
+                        },
+                        {
+                            text: "OK", onPress: () => {
+                                //redirect page to auth
+                                navigation.navigate('Auth', {
+                                    routeName: 'RequestAuthAccess',//send this so we know what kind authentication request is this
+                                })
+                            },
+                            style: "destructive"
+                        }
+                    ]
+                )
+
             }
         }
         fetchData()

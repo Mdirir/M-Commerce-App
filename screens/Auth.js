@@ -8,8 +8,9 @@ import { ShopConsumer } from '../store/context'
 import InsetShadow from 'react-native-inset-shadow'
 import { RadioButton } from 'react-native-paper'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
+import { useRoute } from '@react-navigation/native'
 
-function Auth({ navigation }) {
+function Auth({ route, navigation }, props) {
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
     //new data
@@ -27,6 +28,7 @@ function Auth({ navigation }) {
 
     const context = ShopConsumer()
     const { state, createSession } = context
+    // const route = useRoute()
     useLayoutEffect(() => {
         if (state.session.token && state.session.token.length > 70) {
             if (state.session.user.name === 'admin' || state.session.user.name === 'Admin') {
@@ -35,11 +37,19 @@ function Auth({ navigation }) {
             else {
                 navigation.navigate('Home')
             }
-            // navigation.setOptions = {
-            //     title: 'HomePAGE',
-            // }
         }
-    }, [state])
+        //Register or Grant system access
+        if (route.params) {
+            if (route.params.routeName === 'RequestAuthAccess') navigation.navigate('Auth')
+            if (route.params.routeName === 'RequestAuthAccessUsingPush') navigation.navigate('Auth')
+        } else {
+            //Allow Gusts to Also access the system
+            navigation.navigate('Home')
+            navigation.setOptions = {
+                title: 'Home',
+            }
+        }
+    }, [])
     // if(state.session.token.length)
     async function handleLogin() {
         setIsLoadingLogin(true)
@@ -132,7 +142,7 @@ function Auth({ navigation }) {
                 headers: { "Content-Type": "application/json" },
             })
             if (response.data.success) {
-                console.log('new User Created');
+                console.log('new User Created')
                 await AsyncStorage.setItem("Session", JSON.stringify(response.data))
                 createSession()
                 navigation.navigate('Home')

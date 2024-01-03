@@ -66,7 +66,7 @@ function Cart({ navigation }) {
                 <FlatList data={state.product} key={(key) => key.product_id} renderItem={itemRenderer} className='ml-2 rounded-lg' />
             </View>
             <View className='h-16'>
-                {state.product[0] ? <Payment userName={state.session.user.name} product_title={state.product[0] ? state.product[0].product_title : 0} totalPrice={state.totalPrice} allProducts={state.product} /> : ""}
+                {state.product[0] && state.session != "" ? <Payment userName={state.session.user.name} product_title={state.product[0] ? state.product[0].product_title : 0} totalPrice={state.totalPrice} allProducts={state.product} /> : ""}
             </View>
         </View >
     )

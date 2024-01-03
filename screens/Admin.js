@@ -56,7 +56,7 @@ function Admin(props) {
                                 <Pressable onPress={() => { setTogleProductAdd(true), setTogleProductView(false) }}
                                     className=" bg-opacity-0 flex flex-row py-2 px-3 rounded-lg" android_ripple={{ color: '#ccc' }}
                                 >
-                                    <Text className='p-2 text-lg'> View Add Products</Text>
+                                    <Text className='p-2 text-lg'> Add Products</Text>
                                 </Pressable>
                             </InsetShadow>
                         </View>

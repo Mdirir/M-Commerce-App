@@ -103,7 +103,7 @@ function Payment(props) {
         //console.log(UserProducts[0]['simp'].map((i, index) => console.log(i)), 'ABCDE')
         //console.log(userSales);
     }
-    const fetchPaymentSheetParams = async () => {//1
+    async function fetchPaymentSheetParams() {//1
         try {
             const response = await axios.get(
                 `${process.env.REACT_APP_HTTP_LINK}/product/mobilePayment`,
@@ -120,6 +120,7 @@ function Payment(props) {
             return { paymentIntent, ephemeralKey, customer }
         } catch (error) {
             console.log(error, 'error fetching Stripe params')
+            Alert.alert(error, 'error fetching Stripe params')
             setPaymentPrepration(true)
         }
     }//2nd

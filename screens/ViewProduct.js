@@ -52,7 +52,7 @@ function ViewProduct({ route, navigation }) {
                 color,
                 size
             )
-            Alert.alert('Added to Cart')
+            Alert.alert('Added to Cart', 'Go to Cart for Checkout')
             cart(cartProduct)
         }
 
