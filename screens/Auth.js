@@ -29,26 +29,32 @@ function Auth({ route, navigation }, props) {
     const context = ShopConsumer()
     const { state, createSession } = context
     // const route = useRoute()
+    async function initializeRecommedation() {
+        const weights = await AsyncStorage.getItem("WeightsAndBaises")
+        const weightsAndBaises = JSON.parse(weights)
+        if (!!weightsAndBaises) {
+            //presever old values
+        } else {
+            const categoryWeights = {//give admin control and save this as local data
+                'jacket': 2,//dobles that
+                'shirt': 1,
+                't-shirt': 1,
+                'shoes': 1,
+                'dress': 1,
+                'trouser': 2,
+            }
+            await AsyncStorage.setItem("WeightsAndBaises", JSON.stringify(categoryWeights))
+        }
+    }
     useLayoutEffect(() => {
+        initializeRecommedation()
         if (state.session.token && state.session.token.length > 70) {
             if (state.session.user.name === 'admin' || state.session.user.name === 'Admin') {
                 navigation.navigate('Admin')
             }
             else {
-                //initiate Reccomendation algo
-                setRecommedation()
-                async function setRecommedation() {
-                    const categoryWeights = {//give admin control and save this as local data
-                        'jacket': 2,//dobles that
-                        'shirt': 1,
-                        't-shirt': 1,
-                        'shoes': 1,
-                        'dress': 1,
-                        'trouser': 2,
-                    }
-                    await AsyncStorage.setItem("WeightsAndBaises", JSON.stringify(categoryWeights))
-                }
-                navigation.navigate('Home')
+                //initiate Reccomendation algo ;; not needed but just incase
+                initializeRecommedation()
             }
         }
         //Register or Grant system access
@@ -79,6 +85,7 @@ function Auth({ route, navigation }, props) {
             if (response.data.success) {
                 await AsyncStorage.setItem("Session", JSON.stringify(response.data))
                 createSession()
+                initializeRecommedation()
                 setIsLoadingLogin(false)
                 if (response.data.user.name === 'admin' || response.data.user.name === 'Admin') {
                     navigation.navigate('Admin')
@@ -158,6 +165,7 @@ function Auth({ route, navigation }, props) {
                 console.log('new User Created')
                 await AsyncStorage.setItem("Session", JSON.stringify(response.data))
                 createSession()
+                initializeRecommedation()
                 navigation.navigate('Home')
                 setIsLoadingSignup(false)
             }

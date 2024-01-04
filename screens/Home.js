@@ -43,10 +43,11 @@ function Home({ navigation }) {
 
                 //console.log(responseStore.data.products)
                 //prevent Gues users from getting recommendation
-                console.log(state.session)
+                //console.log(state.session)
                 if (state.session != "") {
                     const purchase = await AsyncStorage.getItem("UserPurchaseHisory")
                     const UserPurchaseHisory = JSON.parse(purchase) ///IF THIS GUY IS MEPTY CANCEL THE WHOLE PROCESS
+
                     if (UserPurchaseHisory) {
                         //console.log(UserPurchaseHisory[0]['simp'].map((i, index) => console.log(i)), 'ABCDE')
 

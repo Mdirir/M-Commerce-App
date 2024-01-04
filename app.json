@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Acme_fashion_tailwind",
-    "slug": "Acme_fashion_tailwind",
+    "slug": "acmefashion",
     "plugins": [
       [
         "expo-image-picker",
@@ -47,7 +47,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "ad6bd7aa-186e-40a5-ab66-520528d9926b"
+        "projectId": "af366fad-5cfe-4f86-bac4-cdd9c0c370f8"
       }
     }
   }
