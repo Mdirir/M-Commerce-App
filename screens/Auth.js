@@ -35,6 +35,19 @@ function Auth({ route, navigation }, props) {
                 navigation.navigate('Admin')
             }
             else {
+                //initiate Reccomendation algo
+                setRecommedation()
+                async function setRecommedation() {
+                    const categoryWeights = {//give admin control and save this as local data
+                        'jacket': 2,//dobles that
+                        'shirt': 1,
+                        't-shirt': 1,
+                        'shoes': 1,
+                        'dress': 1,
+                        'trouser': 2,
+                    }
+                    await AsyncStorage.setItem("WeightsAndBaises", JSON.stringify(categoryWeights))
+                }
                 navigation.navigate('Home')
             }
         }
