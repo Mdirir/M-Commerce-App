@@ -10,8 +10,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import DUMMYPRODUCTS from '../DummyPoducts'
 import Payment from '../components/Payment/Payment'
 import { useColorScheme } from 'nativewind'
+import { ShopConsumer } from '../store/context'
 
 function Home({ navigation }) {
+    const context = ShopConsumer()
+    const { state, setSearchTerm, cartRemoval } = context
     const { colorScheme, toggleColorScheme } = useColorScheme()
     const [products, setProducts] = useState()
     const [tailoredProducts, setTailoredProducts] = useState()
@@ -39,50 +42,54 @@ function Home({ navigation }) {
                 //Add Recommendation System
 
                 //console.log(responseStore.data.products)
-                const purchase = await AsyncStorage.getItem("UserPurchaseHisory")
-                const UserPurchaseHisory = JSON.parse(purchase) ///IF THIS GUY IS MEPTY CANCEL THE WHOLE PROCESS
-                if (UserPurchaseHisory) {
-                    //console.log(UserPurchaseHisory[0]['simp'].map((i, index) => console.log(i)), 'ABCDE')
+                //prevent Gues users from getting recommendation
+                console.log(state.session)
+                if (state.session != "") {
+                    const purchase = await AsyncStorage.getItem("UserPurchaseHisory")
+                    const UserPurchaseHisory = JSON.parse(purchase) ///IF THIS GUY IS MEPTY CANCEL THE WHOLE PROCESS
+                    if (UserPurchaseHisory) {
+                        //console.log(UserPurchaseHisory[0]['simp'].map((i, index) => console.log(i)), 'ABCDE')
 
-                    const weights = await AsyncStorage.getItem("WeightsAndBaises") //Admin sets them app
-                    const categoryWeights = JSON.parse(weights)
-                    //Logic 3 jacket found in purchaseHitory = 3 X jacket bais (3) = 3x3=9 items if possible.
-                    //console.log(categoryWeights)
-                    /*const categoryWeights = {//give admin control and save this as local data
-                        'jacket': 2,//dobles that
-                        'shirt': 2,
-                        't-shirt': 1,
-                        'shoes': 1,
-                        'dress': 1,
-                        'trouser': 1,
-                    }*/
-                    //
-                    // Calculate user preferences based on purchase history
-                    const userPreferences = UserPurchaseHisory[0]['simp'].reduce((preferences, sale) => {
-                        const { product_category } = sale
-                        preferences[product_category] =
-                            (preferences[product_category] || 0) + categoryWeights[product_category]
-                        return preferences
-                    }, {})
+                        const weights = await AsyncStorage.getItem("WeightsAndBaises") //Admin sets them app
+                        const categoryWeights = JSON.parse(weights)
+                        //Logic 3 jacket found in purchaseHitory = 3 X jacket bais (3) = 3x3=9 items if possible.
+                        //console.log(categoryWeights)
+                        /*const categoryWeights = {//give admin control and save this as local data
+                            'jacket': 2,//dobles that
+                            'shirt': 2,
+                            't-shirt': 1,
+                            'shoes': 1,
+                            'dress': 1,
+                            'trouser': 1,
+                        }*/
+                        //
+                        // Calculate user preferences based on purchase history
+                        const userPreferences = UserPurchaseHisory[0]['simp'].reduce((preferences, sale) => {
+                            const { product_category } = sale
+                            preferences[product_category] =
+                                (preferences[product_category] || 0) + categoryWeights[product_category]
+                            return preferences
+                        }, {})
 
-                    // Sort products based on user preferences
-                    //console.log(userPreferences)
-                    const recommendedProducts = responseStore.data.products
-                        .filter((product) => userPreferences[product.p_cat_id]) // Filter out already purchased categories
-                        .sort(
-                            (a, b) =>
-                                (userPreferences[b.category] || 0) - (userPreferences[a.category] || 0)
-                        )
-                    //console.log(recommendedProducts.length)
-                    //Randomize Results so they don't get repetetive
-                    const shuffledArray = recommendedProducts.slice()
+                        // Sort products based on user preferences
+                        //console.log(userPreferences)
+                        const recommendedProducts = responseStore.data.products
+                            .filter((product) => userPreferences[product.p_cat_id]) // Filter out already purchased categories
+                            .sort(
+                                (a, b) =>
+                                    (userPreferences[b.category] || 0) - (userPreferences[a.category] || 0)
+                            )
+                        //console.log(recommendedProducts.length)
+                        //Randomize Results so they don't get repetetive
+                        const shuffledArray = recommendedProducts.slice()
 
-                    for (let i = shuffledArray.length - 1; i > 0; i--) {
-                        const j = Math.floor(Math.random() * (i + 1));
-                        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]
+                        for (let i = shuffledArray.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]
+                        }
+                        //don't set if there products to recommend
+                        setTailoredProducts(shuffledArray.slice(0, 12))//just limit the displayed results upto 12 
                     }
-                    //don't set if there products to recommend
-                    setTailoredProducts(shuffledArray.slice(0, 12))//just limit the displayed results upto 12 
                 }
             } catch (error) {
                 console.log(error, "OH NO or Axios 404")

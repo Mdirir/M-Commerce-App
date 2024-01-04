@@ -21,6 +21,7 @@ import { SimpleLineIcons } from '@expo/vector-icons'
 import { FontAwesome } from '@expo/vector-icons'
 import { Octicons } from '@expo/vector-icons'
 import { ShopConsumer } from '../../store/context'
+import InsetShadow from 'react-native-inset-shadow'
 
 export default function CustomDrawer(props) {
     const context = ShopConsumer()
@@ -121,20 +122,22 @@ export default function CustomDrawer(props) {
                 </View>
             </DrawerContentScrollView>
             <Drawer.Section style={styles.bottomDrawerSection}>
-                <DrawerItem className="flex-1 items-center justify-center text-color1 bg-blue-500 dark:bg-slate-900"
-                    icon={({ color, size }) => (
-                        <Icon
-                            name="exit-to-app"
-                            color={colorScheme === 'light' ? color : "#ccc"}
-                            size={size}
-                        />
-                    )}
-                    // activeBackgroundColor='red'
-                    // inactiveBackgroundColor='yellow'
-                    label="Sign Out"
-                    inactiveTintColor={colorScheme === 'light' ? 'black' : "#ccc"}
-                    onPress={() => { signOut() }}
-                />
+                <InsetShadow containerStyle={{ borderRadius: 8, display: 'flex', height: 55, marginLeft: 10, marginRight: 10, justifyContent: 'center' }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
+                    <DrawerItem className="flex-1 w-full"
+                        icon={({ color, size }) => (
+                            <Icon
+                                name="exit-to-app"
+                                color={colorScheme === 'light' ? color : "#ccc"}
+                                size={size}
+                            />
+                        )}
+                        // activeBackgroundColor='red'
+                        // inactiveBackgroundColor='yellow'
+                        label="Sign Out"
+                        inactiveTintColor={colorScheme === 'light' ? 'black' : "#ccc"}
+                        onPress={() => { signOut() }}
+                    />
+                </InsetShadow>
             </Drawer.Section>
         </View>
     )

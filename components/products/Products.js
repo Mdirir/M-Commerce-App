@@ -118,7 +118,7 @@ function Products(props) {
     function itemRenderer(e) {
         const rating = getRating(e.product_rating)
         return (
-            <View className="h-auto flex flex-1 gap-2 mb-2  ml-3" key={e.product_id}>
+            <View className="h-auto flex flex-1 gap-2 mb-4  ml-3" key={e.product_id}>
                 <View>
                     <Shadow shadowColor={[styles.card, {
                         shadowOffset: { width: 4, height: -2 },

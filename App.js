@@ -26,16 +26,16 @@ export default function App() {
 
     return (
       <Drawer.Navigator initialRouteName='Auth' screenOptions={{
-        sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? 'white' : "#18140f" },
+        sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? 'white' : "#222" },
       }}
         drawerContent={props => <CustomDrawer {...props} toggleColorScheme={toggleColorScheme} colorScheme={colorScheme} />}>
         <Drawer.Screen
           name="Home" component={Home}
         />
         <Drawer.Screen name="Auth" component={Auth}
-          options={{ headerShown: false, headerBackVisible: false, title: "Authentication", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
+          options={{ headerShown: false, headerBackVisible: false, title: "Authentication", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#222" } }} />
         <Drawer.Screen name="Admin" component={Admin}
-          options={{ headerShown: false, headerBackVisible: false, title: "Admin Dashboard", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
+          options={{ headerShown: false, headerBackVisible: false, title: "Admin Dashboard", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#222" } }} />
       </Drawer.Navigator>
     )
   }
@@ -44,7 +44,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
-            sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+            sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#222" },
 
           }}
         >
@@ -55,7 +55,7 @@ export default function App() {
           <Stack.Screen name="Shop" component={Shop}
             options={{
               cardStyle: { backgroundColor: 'yellow' },
-              headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+              headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#222" },
               headerTintColor: colorScheme === 'light' ? 'black' : "white"
             }} />
           <Stack.Screen name="View" component={ViewProduct}
@@ -65,23 +65,23 @@ export default function App() {
                 title: title
               }, {
                 cardStyle: { backgroundColor: 'yellow' },
-                headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+                headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#222" },
                 headerTintColor: colorScheme === 'light' ? 'black' : "white"
               }
             }} />
           <Stack.Screen name="Cart" component={Cart} options={{
             cardStyle: { backgroundColor: 'yellow' },
-            headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+            headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#222" },
             headerTintColor: colorScheme === 'light' ? 'black' : "white"
           }}
           />
           <Stack.Screen name="Search" component={Search} options={{
             cardStyle: { backgroundColor: 'yellow' },
-            headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" },
+            headerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#222" },
             headerTintColor: colorScheme === 'light' ? 'black' : "white"
           }} />
           <Stack.Screen name="Auth" component={Auth}
-            options={{ headerBackVisible: false, title: "Authentication", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#18140f" } }} />
+            options={{ headerBackVisible: false, title: "Authentication", sceneContainerStyle: { backgroundColor: colorScheme === 'light' ? '#E7EBF0' : "#222" } }} />
         </Stack.Navigator>
       </NavigationContainer >
     </ContextAPI>
