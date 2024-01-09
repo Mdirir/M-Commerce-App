@@ -51,32 +51,32 @@ function Auth({ route, navigation }, props) {
         return JSON.parse(sessionn)
         // console.log(session, "ln 15");
     }
-    /* useLayoutEffect(() => {
-         initializeRecommedation() //initiate Reccomendation algo ;; not needed but just incase
-         counterAsyncFunction()
-         async function counterAsyncFunction() {
-             const session = await loadSession() // you don't state, 'cause it's asynchronous
-             if (session && session.token && session.token.length > 70) {
-                 if (session.user.name === 'admin' || session.user.name === 'Admin') {
-                     navigation.navigate('Admin')
-                 }
-                 else {
-                     navigation.navigate('Home')
-                 }
-             } else {
-                 if (route.params) { //Register or Grant system access
-                     if (route.params.routeName === 'RequestAuthAccess') navigation.navigate('Auth')
-                     if (route.params.routeName === 'RequestAuthAccessUsingPush') navigation.navigate('Auth')
-                 } else {
-                     //Allow Gusts to Also access the system
-                     navigation.navigate('Home')
-                     navigation.setOptions = {
-                         title: 'Home',
-                     }
-                 }
-             }
-         }
-     }, [])*/
+    useLayoutEffect(() => {
+        initializeRecommedation() //initiate Reccomendation algo ;; not needed but just incase
+        counterAsyncFunction()
+        async function counterAsyncFunction() {
+            const session = await loadSession() // you don't state, 'cause it's asynchronous
+            if (session && session.token && session.token.length > 70) {
+                if (session.user.name === 'admin' || session.user.name === 'Admin') {
+                    navigation.navigate('Admin')
+                }
+                else {
+                    navigation.navigate('Home')
+                }
+            } else {
+                if (route.params) { //Register or Grant system access
+                    if (route.params.routeName === 'RequestAuthAccess') navigation.navigate('Auth')
+                    if (route.params.routeName === 'RequestAuthAccessUsingPush') navigation.navigate('Auth')
+                } else {
+                    //Allow Gusts to Also access the system
+                    navigation.navigate('Home')
+                    navigation.setOptions = {
+                        title: 'Home',
+                    }
+                }
+            }
+        }
+    }, [])
     // if(state.session.token.length)
     async function handleLogin() {
         setIsLoadingLogin(true)
