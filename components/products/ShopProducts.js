@@ -147,23 +147,26 @@ function ShopProducts(props) {
                             </Text>
                             <View className="flex-1 flex-row justify-between content-between bg-opacity-0 mb-2 mx-2">
                                 <View className='flex flex-row w-full justify-between'>
-
-                                    <InsetShadow containerStyle={{ borderRadius: 8 }}>
-                                        <Pressable onPress={() => pressedHandler(e.item)}
-                                            className=" bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 mx-1 rounded-[8px]" android_ripple={{ color: '#ccc' }}
-                                        >
-                                            <FontAwesome5 name="eye" size={16} color={colorScheme === "light" ? "black" : "white"} />
-                                            <Text className='p-2'> View</Text>
-                                        </Pressable>
-                                    </InsetShadow>
-                                    <InsetShadow containerStyle={{ borderRadius: 8 }}>
-                                        <Pressable onPress={() => pressedHandler(e.item)}
-                                            className="bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 mx-1 rounded-[8px]" android_ripple={{ color: '#ccc' }}
-                                        >
-                                            <FontAwesome name="shopping-cart" size={16} color={colorScheme === "light" ? "black" : "white"} />
-                                            <Text className='p-2'> Cart</Text>
-                                        </Pressable>
-                                    </InsetShadow>
+                                    <View className='rounded-lg'>
+                                        <InsetShadow containerStyle={{ borderRadius: 8 }}>
+                                            <Pressable onPress={() => pressedHandler(e.item)}
+                                                className=" bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 mx-1 rounded-[8px]" android_ripple={{ color: '#ccc' }}
+                                            >
+                                                <FontAwesome5 name="eye" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                                                <Text className='p-2'> View</Text>
+                                            </Pressable>
+                                        </InsetShadow>
+                                    </View>
+                                    <View className='rounded-lg'>
+                                        <InsetShadow containerStyle={{ borderRadius: 8 }}>
+                                            <Pressable onPress={() => pressedHandler(e.item)}
+                                                className="bg-opacity-0 flex flex-row justify-center items-center content-center text-center p-1 mx-1 rounded-[8px]" android_ripple={{ color: '#ccc' }}
+                                            >
+                                                <FontAwesome name="shopping-cart" size={16} color={colorScheme === "light" ? "black" : "white"} />
+                                                <Text className='p-2'> Cart</Text>
+                                            </Pressable>
+                                        </InsetShadow>
+                                    </View>
                                 </View>
                             </View>
                         </View>

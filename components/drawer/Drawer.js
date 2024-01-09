@@ -26,15 +26,17 @@ import InsetShadow from 'react-native-inset-shadow'
 export default function CustomDrawer(props) {
     const context = ShopConsumer()
     const { state, destroySession } = context
+    //console.log('DRAWER----', state)
     // const colorScheme = useColorScheme.togg
     const { colorScheme, toggleColorScheme } = useColorScheme()
     // console.log(colorScheme);
     // props.toggleColorScheme
     //to style this use navigation, screen name -> fid out on your own or pass it params
-    function signOut() {
-        destroySession()
+    async function signOut() {
+        const res = await destroySession()
         //props.navigation.push('Auth')
-        props.navigation.push('Auth', {
+        console.log(res)
+        if (res) props.navigation.push('Auth', {
             routeName: 'RequestAuthAccessUsingPush',
         })
     }
@@ -122,22 +124,24 @@ export default function CustomDrawer(props) {
                 </View>
             </DrawerContentScrollView>
             <Drawer.Section style={styles.bottomDrawerSection}>
-                <InsetShadow containerStyle={{ borderRadius: 8, display: 'flex', height: 55, marginLeft: 10, marginRight: 10, justifyContent: 'center' }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
-                    <DrawerItem className="flex-1 w-full"
-                        icon={({ color, size }) => (
-                            <Icon
-                                name="exit-to-app"
-                                color={colorScheme === 'light' ? color : "#ccc"}
-                                size={size}
-                            />
-                        )}
-                        // activeBackgroundColor='red'
-                        // inactiveBackgroundColor='yellow'
-                        label="Sign Out"
-                        inactiveTintColor={colorScheme === 'light' ? 'black' : "#ccc"}
-                        onPress={() => { signOut() }}
-                    />
-                </InsetShadow>
+                <View className='rounded-lg m-4'>
+                    <InsetShadow containerStyle={{ borderRadius: 8, display: 'flex', height: 55, justifyContent: 'center' }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
+                        <DrawerItem
+                            icon={({ color, size }) => (
+                                <Icon
+                                    name="exit-to-app"
+                                    color={colorScheme === 'light' ? color : "#ccc"}
+                                    size={size}
+                                />
+                            )}
+                            // activeBackgroundColor='red' 
+                            // inactiveBackgroundColor='yellow'
+                            label={state.session.token && state.session.token.length > 70 ? "Sign Out" : "Sign in"}
+                            inactiveTintColor={colorScheme === 'light' ? 'black' : "#ccc"}
+                            onPress={() => { signOut() }}
+                        />
+                    </InsetShadow>
+                </View>
             </Drawer.Section>
         </View>
     )

@@ -46,29 +46,37 @@ function Auth({ route, navigation }, props) {
             await AsyncStorage.setItem("WeightsAndBaises", JSON.stringify(categoryWeights))
         }
     }
-    useLayoutEffect(() => {
-        initializeRecommedation()
-        if (state.session.token && state.session.token.length > 70) {
-            if (state.session.user.name === 'admin' || state.session.user.name === 'Admin') {
-                navigation.navigate('Admin')
-            }
-            else {
-                //initiate Reccomendation algo ;; not needed but just incase
-                initializeRecommedation()
-            }
-        }
-        //Register or Grant system access
-        if (route.params) {
-            if (route.params.routeName === 'RequestAuthAccess') navigation.navigate('Auth')
-            if (route.params.routeName === 'RequestAuthAccessUsingPush') navigation.navigate('Auth')
-        } else {
-            //Allow Gusts to Also access the system
-            navigation.navigate('Home')
-            navigation.setOptions = {
-                title: 'Home',
-            }
-        }
-    }, [])
+    async function loadSession() {
+        const sessionn = await AsyncStorage.getItem("Session")
+        return JSON.parse(sessionn)
+        // console.log(session, "ln 15");
+    }
+    /* useLayoutEffect(() => {
+         initializeRecommedation() //initiate Reccomendation algo ;; not needed but just incase
+         counterAsyncFunction()
+         async function counterAsyncFunction() {
+             const session = await loadSession() // you don't state, 'cause it's asynchronous
+             if (session && session.token && session.token.length > 70) {
+                 if (session.user.name === 'admin' || session.user.name === 'Admin') {
+                     navigation.navigate('Admin')
+                 }
+                 else {
+                     navigation.navigate('Home')
+                 }
+             } else {
+                 if (route.params) { //Register or Grant system access
+                     if (route.params.routeName === 'RequestAuthAccess') navigation.navigate('Auth')
+                     if (route.params.routeName === 'RequestAuthAccessUsingPush') navigation.navigate('Auth')
+                 } else {
+                     //Allow Gusts to Also access the system
+                     navigation.navigate('Home')
+                     navigation.setOptions = {
+                         title: 'Home',
+                     }
+                 }
+             }
+         }
+     }, [])*/
     // if(state.session.token.length)
     async function handleLogin() {
         setIsLoadingLogin(true)
@@ -132,6 +140,7 @@ function Auth({ route, navigation }, props) {
         }
     }
     function handleUserChoice(choice) {
+        console.log('heyeee')
         //console.log(
         //  email, password, userName, userGender, userDistrict, userRegion, userAddress, userContact
         //)
@@ -212,7 +221,7 @@ function Auth({ route, navigation }, props) {
                         </View>
                         <View className='mx-3'>
                             <InsetShadow containerStyle={{ borderRadius: 8, height: 'auto' }}>
-                                <TextInput className='p-3 w-80 dark:placeholder-white' placeholder='Password' autoComplete='password' onChangeText={(e) => setPassword(e)} />
+                                <TextInput className='p-3 w-80 dark:placeholder-white' placeholder='Password' secureTextEntry={true} autoComplete='password' onChangeText={(e) => setPassword(e)} />
                             </InsetShadow>
                         </View>
                         <View className='flex flex-row justify-center items-center'>
@@ -247,19 +256,19 @@ function Auth({ route, navigation }, props) {
                         </View>
                         <View className='mx-3'>
                             <InsetShadow containerStyle={{ borderRadius: 8, height: 'auto' }}>
-                                <TextInput className='p-3 w-80 dark:placeholder-white' placeholder='Address' autoComplete='street-address' onChangeText={(e) => setAddress(e)} />
+                                <TextInput className='p-3 w-80 dark:placeholder-black' placeholder='Address' autoComplete='street-address' onChangeText={(e) => setAddress(e)} />
                             </InsetShadow>
                         </View>
                     </View>
                         :
                         <View className='justify-center items-center gap-y-5'>
-                            <View className=" flex-row table border-2 rounded-lg gap-x-3 items-center">
-                                <Text className='p-2 dark:text-white text-center'>Email:</Text>
-                                <TextInput className='p-2 w-64 border-l-[1px] ml-10  dark:placeholder-white' placeholder='Email' autoComplete='email' onChangeText={(e) => setEmail(e)} />
+                            <View className=" flex-row table border-2 rounded-lg gap-x-3 items-center ml-1">
+                                <Text className='p-2 dark:text-white dark:text-black'>Email:</Text>
+                                <TextInput className='p-2 w-64 border-l-[1px] dark:placeholder-white dark:text-black' placeholder='Email' autoComplete='email' onChangeText={(e) => setEmail(e)} />
                             </View>
-                            <View className=" flex-row gap-x-0 table border-2 rounded-lg -ml-2 items-center">
-                                <Text className='p-2 dark:text-white text-center'>Password:</Text>
-                                <TextInput className='p-2 w-[249px] border-l-[1px] dark:placeholder-white' placeholder='Password' autoComplete='password' onChangeText={(e) => setPassword(e)} />
+                            <View className=" flex-row gap-x-0 table border-2 rounded-lg items-center">
+                                <Text className='p-2 dark:text-white text-center dark:text-black'>Password:</Text>
+                                <TextInput className='p-2 w-[249px] border-l-[1px] dark:text-black' placeholder='Password' secureTextEntry={true} autoComplete='password' onChangeText={(e) => setPassword(e)} />
                             </View>
 
                         </View>
@@ -270,14 +279,14 @@ function Auth({ route, navigation }, props) {
                         <InsetShadow containerStyle={{ borderRadius: 8, height: 'auto' }}>
                             <Pressable android_ripple={{ color: "#ccc" }} onPress={() => handleUserChoice('signin')}>
                                 <View className={`${!authModal ? 'flex flex-row border-[1px] rounded-lg py-3 px-5' : 'flex flex-row rounded-lg py-3 px-5'}`}>
-                                    <Text className='text-lg  dark:text-white mr-3 text-center'>{!authModal ? 'Sign in' : 'Exisitng Accont'}</Text>
+                                    <Text className='text-lg  dark:text-white mr-3 text-center dark:text-black'>{!authModal ? 'Sign in' : 'Exisitng Accont'}</Text>
                                     {isLoadingLogin ? <ActivityIndicator size="small" color="green" /> : ""}
                                 </View>
                             </Pressable>
                         </InsetShadow>
                         <Pressable android_ripple={{ color: "#ccc" }} onPress={() => handleUserChoice('signup')}>
                             <View className={`${authModal ? 'flex flex-row border-[1px] rounded-lg justify-center' : "flex flex-row rounded-lg justify-center"}`}>
-                                <Text className='py-3 text-lg dark:text-white text-center'>Sign up </Text>
+                                <Text className='py-3 text-lg dark:text-white text-center dark:text-black'>Sign up </Text>
                                 {isLoadingSignup ? <ActivityIndicator size="small" color="green" /> : ""}
                             </View>
                         </Pressable>

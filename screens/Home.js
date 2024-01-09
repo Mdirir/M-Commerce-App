@@ -104,7 +104,7 @@ function Home({ navigation }) {
     }, [])
     return (
         <ScrollView className='flex-1'>
-            <View className='mx-2'>
+            <View className='mx-2 rounded-lg'>
                 <InsetShadow containerStyle={{ marginVertical: 12, borderRadius: 8, height: 50 }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
                     <Text className="p-4 font-bold rounded-[8px] dark:text-white">
                         Featured Products
@@ -113,7 +113,7 @@ function Home({ navigation }) {
             <View className='mx-1'>
                 {products ? <FeaturedProduct products={products.featuredProducts} /> : <ActivityIndicator size="small" color="green" />}
             </View>
-            <View className='mx-2 my-4'>
+            <View className='mx-2 my-4 rounded-lg'>
                 <InsetShadow containerStyle={{ borderRadius: 8, height: 50 }} shadowColor={colorScheme === 'light' ? 'black' : 'white'} elevation={5}>
                     <Text className="p-4 font-bold rounded-[8px] dark:text-white">
                         {tailoredProducts ? 'Recommended Products' : 'Latest Products'}

@@ -33,7 +33,9 @@ class ContextAPI extends Component {
   }
   destroySession = async () => {
     await AsyncStorage.removeItem("Session")
-    this.setState({ session: "" })
+    this.setState({ session: "", product: [] })
+    await AsyncStorage.setItem("products", JSON.stringify(this.state))
+    return 'success' //make sure state clears out before navigating to other screen
   }
   cart = async (value) => {
     let data = this.state.product
